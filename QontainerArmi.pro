@@ -36,7 +36,8 @@ SOURCES += \
         GUI/inserimento.cpp \
         GUI/comboboxtipoarma.cpp \
         GUI/dettagli.cpp \
-        GUI/ricerca.cpp
+        GUI/ricerca.cpp \
+    GUI/layoutricercaelimina.cpp
 
 HEADERS += \
         GUI/widget.h \
@@ -50,7 +51,8 @@ HEADERS += \
         GUI/inserimento.h \
         GUI/comboboxtipoarma.h \
         GUI/dettagli.h \
-        GUI/ricerca.h
+        GUI/ricerca.h \
+    GUI/layoutricercaelimina.h
 RESOURCES += \
     resources.qrc
 DISTFILES += \

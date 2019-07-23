@@ -2,10 +2,13 @@
 #define RICERCA_H
 
 #include <QDialog>
+#include "layoutricercaelimina.h"
 
 class Ricerca : public QDialog
 {
     Q_OBJECT
+private:
+    layoutRicercaElimina ric;
 public:
     explicit Ricerca(QWidget *parent = nullptr);
 };
