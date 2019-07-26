@@ -91,8 +91,7 @@ void Widget::advancedDeleteClicked(){
 void Widget::visualizzaClicked(){
     d=new Dettagli("x",this);
     (*d).setWindowTitle("Dettagli-Qontainer Armi");
-    (*d
-            ).setModal(true);
+    (*d).setModal(true);
     (*d).show();
 }
 void Widget::nextClicked(){

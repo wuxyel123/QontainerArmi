@@ -16,8 +16,24 @@ class layoutRicercaElimina : public QWidget
     Q_OBJECT
 public:
     explicit layoutRicercaElimina(QWidget *parent = nullptr);
+    int getTipo()const;
+    QString getName()const;
+    QString getDesigner()const;
+    double getPriceMin()const;
+    double getPriceMax()const;
+    bool getLicenseNeeded()const;
+    QString getCaliber()const;
+    double getJoule()const;
+    double getBladeLengthMin()const;
+    double getBladeLengthMax()const;
+    double getFillingWeight()const;
 
 private:
+    void setAllExtraNotVisible() const;
+    void setArmaDaFuocoVisible(bool) const;//Questo e i seguenti set modificano anche l'enabled
+    void setArmaPneumaticaVisible(bool) const;
+    void setArmaBiancaVisible(bool) const;
+    void setEsplosivoVisible(bool) const;
     comboBoxTipoArma *tipoArma;
 
     //ARMA
@@ -51,14 +67,13 @@ private:
     //LAYOUT
     QGridLayout* fields;
 
-
-
-
-
 signals:
 
 public slots:
-    //void slotViewElements(int)const;
+    void slotViewElements(int)const;
+private slots:
+    void slotPrice(double);
+    void slotBladeLength(double);
 };
 
 #endif // LAYOUTRICERCAELIMINA_H

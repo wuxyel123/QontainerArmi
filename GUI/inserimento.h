@@ -26,6 +26,11 @@ public:
 
 private:
     void setAllExtraNotVisible() const;
+    void setArmaDaFuocoVisible(bool) const;//Questo e i seguenti set modificano anche l'enabled
+    void setArmaPneumaticaVisible(bool) const;
+    void setArmaAPolvereVisible(bool) const;
+    void setArmaBiancaVisible(bool) const;
+    void setEsplosivoVisible(bool) const;
     comboBoxTipoArma *tipoArma;
 
     //ARMA

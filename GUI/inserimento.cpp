@@ -126,6 +126,16 @@ Inserimento::Inserimento(QWidget *parent) : QDialog(parent),
     bladeLength->setMaximum(300);
     fillingWeight->setMaximum(9999);
 
+    //Placeholders
+    caliber->setPlaceholderText("Inserisci il calibro.");
+    feedSystem->setPlaceholderText("Inserisci il tipo di alimentazione. (Es. Caricatori standard da 30 colpi, Caricatore a tamburo da 100 colpi)");
+    gasUsed->setPlaceholderText("Inserisci il gas compresso utilizzato. (Es. CO2, Aria)");
+    cartridge->setPlaceholderText("Inserisci il tipo di munizioni. (Es. 45ACP, 7.62x39mm, .338 Lapua Magnum)");
+    bladeType->setPlaceholderText("Inserisci il tipo di lama. ");
+    hiltType->setPlaceholderText("Inserisci il tipo di impugnatura e/o il materiale.(Es. Polimero, a due mani, con crociera a bracci diritti  )");
+    filling->setPlaceholderText("Inserisci il tipo di lama. ");
+    detonationMechanism->setPlaceholderText("Inserisci il tipo di impugnatura e/o il materiale.(Es. Polimero, a due mani, con crociera a bracci diritti  )");
+
     //CONNECT
     connect(tipoArma,SIGNAL(activated(int)),this,SLOT(slotViewElements(int)));
     connect(selImg,SIGNAL(clicked()), this, SLOT(slotChooseImage()));
@@ -133,67 +143,36 @@ Inserimento::Inserimento(QWidget *parent) : QDialog(parent),
     connect(inserisci,SIGNAL(clicked()),this,SLOT(slotInserisci()));
 }
 void Inserimento::setAllExtraNotVisible()const {
-    //Settaggio campi specifici a disabled
-    rateOfFire->setEnabled(false);
-    firingRange->setEnabled(false);
-    muzzleVelocity->setEnabled(false);
-    barrelLength->setEnabled(false);
-    caliber->setEnabled(false);
-    feedSystem->setEnabled(false);
-
-    joule->setEnabled(false);
-    gasUsed->setEnabled(false);
-
-    cartridge->setEnabled(false);
-
-    bladeLength->setEnabled(false);
-    hiltType->setEnabled(false);
-    bladeType->setEnabled(false);
-
-    filling->setEnabled(false);
-    detonationMechanism->setEnabled(false);
-    fillingWeight->setEnabled(false);
-
-    //Settaggio campi specifici a !visible
-    rateOfFire->setVisible(false);
-    firingRange->setVisible(false);
-    muzzleVelocity->setVisible(false);
-    barrelLength->setVisible(false);
-    caliber->setVisible(false);
-    feedSystem->setVisible(false);
-    lRateOfFire->setVisible(false);
-    lFiringRange->setVisible(false);
-    lMuzzleVelocity->setVisible(false);
-    lBarrelLength->setVisible(false);
-    lCaliber->setVisible(false);
-    lFeedSystem->setVisible(false);
-
-    joule->setVisible(false);
-    gasUsed->setVisible(false);
-    lJoule->setVisible(false);
-    lGasUsed->setVisible(false);
-
-    cartridge->setVisible(false);
-    lCartridge->setVisible(false);
-
-    bladeLength->setVisible(false);
-    hiltType->setVisible(false);
-    bladeType->setVisible(false);
-    lBladeLength->setVisible(false);
-    lHiltType->setVisible(false);
-    lBladeType->setVisible(false);
-
-    filling->setVisible(false);
-    detonationMechanism->setVisible(false);
-    fillingWeight->setVisible(false);
-    lFilling->setVisible(false);
-    lDetonationMechanism->setVisible(false);
-    lFillingWeight->setVisible(false);
+    setArmaDaFuocoVisible(false);
+    setArmaPneumaticaVisible(false);
+    setArmaAPolvereVisible(false);
+    setArmaBiancaVisible(false);
+    setEsplosivoVisible(false);
 }
-void Inserimento::slotViewElements(int index)const{
-    switch (index) {
-        case 0:
-        //Rimozione campi specifici dalla finestra
+
+void Inserimento::setArmaDaFuocoVisible(bool b)const {
+
+    rateOfFire->setEnabled(b);
+    firingRange->setEnabled(b);
+    muzzleVelocity->setEnabled(b);
+    barrelLength->setEnabled(b);
+    caliber->setEnabled(b);
+    feedSystem->setEnabled(b);
+
+    rateOfFire->setVisible(b);
+    firingRange->setVisible(b);
+    muzzleVelocity->setVisible(b);
+    barrelLength->setVisible(b);
+    caliber->setVisible(b);
+    feedSystem->setVisible(b);
+    lRateOfFire->setVisible(b);
+    lFiringRange->setVisible(b);
+    lMuzzleVelocity->setVisible(b);
+    lBarrelLength->setVisible(b);
+    lCaliber->setVisible(b);
+    lFeedSystem->setVisible(b);
+
+    if(!b){
         fields->removeWidget(lRateOfFire);
         fields->removeWidget(lFiringRange);
         fields->removeWidget(lMuzzleVelocity);
@@ -206,111 +185,8 @@ void Inserimento::slotViewElements(int index)const{
         fields->removeWidget(barrelLength);
         fields->removeWidget(caliber);
         fields->removeWidget(feedSystem);
-
-        fields->removeWidget(lJoule);
-        fields->removeWidget(lGasUsed);
-        fields->removeWidget(joule);
-        fields->removeWidget(gasUsed);
-
-        fields->removeWidget(lCartridge);
-        fields->removeWidget(cartridge);
-
-        fields->removeWidget(lBladeLength);
-        fields->removeWidget(lHiltType);
-        fields->removeWidget(lBladeType);
-        fields->removeWidget(bladeLength);
-        fields->removeWidget(hiltType);
-        fields->removeWidget(bladeType);
-
-        fields->removeWidget(lFilling);
-        fields->removeWidget(lDetonationMechanism);
-        fields->removeWidget(lFillingWeight);
-        fields->removeWidget(filling);
-        fields->removeWidget(detonationMechanism);
-        fields->removeWidget(fillingWeight);
-
-        setAllExtraNotVisible();
-
-        form->update();
-        fields->update();
-
-        break;
-        case 1://PNEUMATICA
-        //Rimozione campi specifici dalla finestra
-        fields->removeWidget(lCartridge);
-        fields->removeWidget(cartridge);
-
-        fields->removeWidget(lBladeLength);
-        fields->removeWidget(lHiltType);
-        fields->removeWidget(lBladeType);
-        fields->removeWidget(bladeLength);
-        fields->removeWidget(hiltType);
-        fields->removeWidget(bladeType);
-
-        fields->removeWidget(lFilling);
-        fields->removeWidget(lDetonationMechanism);
-        fields->removeWidget(lFillingWeight);
-        fields->removeWidget(filling);
-        fields->removeWidget(detonationMechanism);
-        fields->removeWidget(fillingWeight);
-
-        rateOfFire->setVisible(true);
-        firingRange->setVisible(true);
-        muzzleVelocity->setVisible(true);
-        barrelLength->setVisible(true);
-        caliber->setVisible(true);
-        feedSystem->setVisible(true);
-        lRateOfFire->setVisible(true);
-        lFiringRange->setVisible(true);
-        lMuzzleVelocity->setVisible(true);
-        lBarrelLength->setVisible(true);
-        lCaliber->setVisible(true);
-        lFeedSystem->setVisible(true);
-
-        joule->setVisible(true);
-        gasUsed->setVisible(true);
-        lJoule->setVisible(true);
-        lGasUsed->setVisible(true);
-
-        cartridge->setVisible(false);
-        lCartridge->setVisible(false);
-
-        bladeLength->setVisible(false);
-        hiltType->setVisible(false);
-        bladeType->setVisible(false);
-        lBladeLength->setVisible(false);
-        lHiltType->setVisible(false);
-        lBladeType->setVisible(false);
-
-        filling->setVisible(false);
-        detonationMechanism->setVisible(false);
-        fillingWeight->setVisible(false);
-        lFilling->setVisible(false);
-        lDetonationMechanism->setVisible(false);
-        lFillingWeight->setVisible(false);
-
-        //Settaggio campi specifici a disabled/enabled
-        rateOfFire->setEnabled(true);
-        firingRange->setEnabled(true);
-        muzzleVelocity->setEnabled(true);
-        barrelLength->setEnabled(true);
-        caliber->setEnabled(true);
-        feedSystem->setEnabled(true);
-
-        joule->setEnabled(true);
-        gasUsed->setEnabled(true);
-
-        cartridge->setEnabled(false);
-
-        bladeLength->setEnabled(false);
-        hiltType->setEnabled(false);
-        bladeType->setEnabled(false);
-
-        filling->setEnabled(false);
-        detonationMechanism->setEnabled(false);
-        fillingWeight->setEnabled(false);
-
-        //inserimento campi specifici in fields
+    }
+    else{
         fields->addWidget(lRateOfFire,0,2);
         fields->addWidget(rateOfFire,0,3);
 
@@ -324,18 +200,111 @@ void Inserimento::slotViewElements(int index)const{
         fields->addWidget(barrelLength,3,3);
 
         fields->addWidget(lCaliber,4,2);
-        caliber->setPlaceholderText("Inserisci il calibro.");
         fields->addWidget(caliber,4,3);
 
         fields->addWidget(lFeedSystem,5,2);
-        feedSystem->setPlaceholderText("Inserisci il tipo di alimentazione.");
         fields->addWidget(feedSystem,5,3);
+    }
+
+}
+
+void Inserimento::setArmaPneumaticaVisible(bool b)const {
+
+    joule->setEnabled(b);
+    gasUsed->setEnabled(b);
+
+    joule->setVisible(b);
+    gasUsed->setVisible(b);
+    lJoule->setVisible(b);
+    lGasUsed->setVisible(b);
+
+    if(!b){
+        fields->removeWidget(lJoule);
+        fields->removeWidget(lGasUsed);
+        fields->removeWidget(joule);
+        fields->removeWidget(gasUsed);
+    }
+
+}
+
+void Inserimento::setArmaAPolvereVisible(bool b)const {
+
+    cartridge->setEnabled(b);
+
+    cartridge->setVisible(b);
+    lCartridge->setVisible(b);
+
+    if(!b){
+        fields->removeWidget(lCartridge);
+        fields->removeWidget(cartridge);
+    }
+
+}
+
+void Inserimento::setArmaBiancaVisible(bool b)const {
+
+    bladeLength->setEnabled(b);
+    hiltType->setEnabled(b);
+    bladeType->setEnabled(b);
+
+    bladeLength->setVisible(b);
+    hiltType->setVisible(b);
+    bladeType->setVisible(b);
+    lBladeLength->setVisible(b);
+    lHiltType->setVisible(b);
+    lBladeType->setVisible(b);
+
+    if(!b){
+        fields->removeWidget(lBladeLength);
+        fields->removeWidget(lHiltType);
+        fields->removeWidget(lBladeType);
+        fields->removeWidget(bladeLength);
+        fields->removeWidget(hiltType);
+        fields->removeWidget(bladeType);
+    }
+
+}
+void Inserimento::setEsplosivoVisible(bool b)const {
+
+    filling->setEnabled(b);
+    detonationMechanism->setEnabled(b);
+    fillingWeight->setEnabled(b);
+
+    filling->setVisible(b);
+    detonationMechanism->setVisible(b);
+    fillingWeight->setVisible(b);
+    lFilling->setVisible(b);
+    lDetonationMechanism->setVisible(b);
+    lFillingWeight->setVisible(b);
+
+    if(!b){
+        fields->removeWidget(lFilling);
+        fields->removeWidget(lDetonationMechanism);
+        fields->removeWidget(lFillingWeight);
+        fields->removeWidget(filling);
+        fields->removeWidget(detonationMechanism);
+        fields->removeWidget(fillingWeight);
+    }
+
+}
+void Inserimento::slotViewElements(int index)const{
+    switch (index) {
+        case 0:
+        setAllExtraNotVisible();
+        form->update();
+        fields->update();
+        break;
+        case 1:
+        setArmaDaFuocoVisible(true);
+        setArmaPneumaticaVisible(true);
+        setArmaAPolvereVisible(false);
+        setArmaBiancaVisible(false);
+        setEsplosivoVisible(false);
 
         fields->addWidget(lJoule,6,2);
         fields->addWidget(joule,6,3);
 
         fields->addWidget(lGasUsed,7,2);
-        gasUsed->setPlaceholderText("Inserisci il gas compresso utilizzato. (Es. CO2, Aria)");
         fields->addWidget(gasUsed,7,3);
 
         form->update();
@@ -344,104 +313,13 @@ void Inserimento::slotViewElements(int index)const{
         break;
         case 2://ARMA A POLVERE
         //Rimozione campi specifici dalla finestra
-        fields->removeWidget(lJoule);
-        fields->removeWidget(lGasUsed);
-        fields->removeWidget(joule);
-        fields->removeWidget(gasUsed);
-
-        fields->removeWidget(lBladeLength);
-        fields->removeWidget(lHiltType);
-        fields->removeWidget(lBladeType);
-        fields->removeWidget(bladeLength);
-        fields->removeWidget(hiltType);
-        fields->removeWidget(bladeType);
-
-        fields->removeWidget(lFilling);
-        fields->removeWidget(lDetonationMechanism);
-        fields->removeWidget(lFillingWeight);
-        fields->removeWidget(filling);
-        fields->removeWidget(detonationMechanism);
-        fields->removeWidget(fillingWeight);
-
-        rateOfFire->setVisible(true);
-        firingRange->setVisible(true);
-        muzzleVelocity->setVisible(true);
-        barrelLength->setVisible(true);
-        caliber->setVisible(true);
-        feedSystem->setVisible(true);
-        lRateOfFire->setVisible(true);
-        lFiringRange->setVisible(true);
-        lMuzzleVelocity->setVisible(true);
-        lBarrelLength->setVisible(true);
-        lCaliber->setVisible(true);
-        lFeedSystem->setVisible(true);
-
-        joule->setVisible(false);
-        gasUsed->setVisible(false);
-        lJoule->setVisible(false);
-        lGasUsed->setVisible(false);
-
-        cartridge->setVisible(true);
-        lCartridge->setVisible(true);
-
-        bladeLength->setVisible(false);
-        hiltType->setVisible(false);
-        bladeType->setVisible(false);
-        lBladeLength->setVisible(false);
-        lHiltType->setVisible(false);
-        lBladeType->setVisible(false);
-
-        filling->setVisible(false);
-        detonationMechanism->setVisible(false);
-        fillingWeight->setVisible(false);
-        lFilling->setVisible(false);
-        lDetonationMechanism->setVisible(false);
-        lFillingWeight->setVisible(false);
-
-        //Settaggio campi specifici a disabled/enabled
-        rateOfFire->setEnabled(true);
-        firingRange->setEnabled(true);
-        muzzleVelocity->setEnabled(true);
-        barrelLength->setEnabled(true);
-        caliber->setEnabled(true);
-        feedSystem->setEnabled(true);
-
-        joule->setEnabled(false);
-        gasUsed->setEnabled(false);
-
-        cartridge->setEnabled(true);
-
-        bladeLength->setEnabled(false);
-        hiltType->setEnabled(false);
-        bladeType->setEnabled(false);
-
-        filling->setEnabled(false);
-        detonationMechanism->setEnabled(false);
-        fillingWeight->setEnabled(false);
-
-        //inserimento campi specifici in fields
-        fields->addWidget(lRateOfFire,0,2);
-        fields->addWidget(rateOfFire,0,3);
-
-        fields->addWidget(lFiringRange,1,2);
-        fields->addWidget(firingRange,1,3);
-
-        fields->addWidget(lMuzzleVelocity,2,2);
-        fields->addWidget(muzzleVelocity,2,3);
-
-        fields->addWidget(lBarrelLength,3,2);
-        fields->addWidget(barrelLength,3,3);
-
-        fields->addWidget(lCaliber,4,2);
-        caliber->setPlaceholderText("Inserisci il calibro.");
-        fields->addWidget(caliber,4,3);
-
-        fields->addWidget(lFeedSystem,5,2);
-        feedSystem->setPlaceholderText("Inserisci il tipo di alimentazione.");
-        fields->addWidget(feedSystem,5,3);
+        setArmaDaFuocoVisible(true);
+        setArmaPneumaticaVisible(false);
+        setArmaAPolvereVisible(true);
+        setArmaBiancaVisible(false);
+        setEsplosivoVisible(false);
 
         fields->addWidget(lCartridge,7,2);
-        cartridge->setPlaceholderText("Inserisci il tipo di munizioni. (Es. 45ACP, 7.62x39mm, .338 Lapua Magnum)");
         fields->addWidget(cartridge,7,3);
 
         form->update();
@@ -449,104 +327,20 @@ void Inserimento::slotViewElements(int index)const{
 
         break;
         case 3://ARMA BIANCA
-        //Rimozione campi specifici dalla finestra
-        fields->removeWidget(lRateOfFire);
-        fields->removeWidget(lFiringRange);
-        fields->removeWidget(lMuzzleVelocity);
-        fields->removeWidget(lBarrelLength);
-        fields->removeWidget(lCaliber);
-        fields->removeWidget(lFeedSystem);
-        fields->removeWidget(rateOfFire);
-        fields->removeWidget(firingRange);
-        fields->removeWidget(muzzleVelocity);
-        fields->removeWidget(barrelLength);
-        fields->removeWidget(caliber);
-        fields->removeWidget(feedSystem);
+        setArmaDaFuocoVisible(false);
+        setArmaPneumaticaVisible(false);
+        setArmaAPolvereVisible(false);
+        setArmaBiancaVisible(true);
+        setEsplosivoVisible(false);
 
-        fields->removeWidget(lJoule);
-        fields->removeWidget(lGasUsed);
-        fields->removeWidget(joule);
-        fields->removeWidget(gasUsed);
-
-        fields->removeWidget(lCartridge);
-        fields->removeWidget(cartridge);
-
-        fields->removeWidget(lFilling);
-        fields->removeWidget(lDetonationMechanism);
-        fields->removeWidget(lFillingWeight);
-        fields->removeWidget(filling);
-        fields->removeWidget(detonationMechanism);
-        fields->removeWidget(fillingWeight);
-
-        rateOfFire->setVisible(false);
-        firingRange->setVisible(false);
-        muzzleVelocity->setVisible(false);
-        barrelLength->setVisible(false);
-        caliber->setVisible(false);
-        feedSystem->setVisible(false);
-        lRateOfFire->setVisible(false);
-        lFiringRange->setVisible(false);
-        lMuzzleVelocity->setVisible(false);
-        lBarrelLength->setVisible(false);
-        lCaliber->setVisible(false);
-        lFeedSystem->setVisible(false);
-
-        joule->setVisible(false);
-        gasUsed->setVisible(false);
-        lJoule->setVisible(false);
-        lGasUsed->setVisible(false);
-
-        cartridge->setVisible(false);
-        lCartridge->setVisible(false);
-
-        bladeLength->setVisible(true);
-        hiltType->setVisible(true);
-        bladeType->setVisible(true);
-        lBladeLength->setVisible(true);
-        lHiltType->setVisible(true);
-        lBladeType->setVisible(true);
-
-        filling->setVisible(false);
-        detonationMechanism->setVisible(false);
-        fillingWeight->setVisible(false);
-        lFilling->setVisible(false);
-        lDetonationMechanism->setVisible(false);
-        lFillingWeight->setVisible(false);
-
-        //Settaggio campi specifici a disabled/enabled
-        rateOfFire->setEnabled(false);
-        firingRange->setEnabled(false);
-        muzzleVelocity->setEnabled(false);
-        barrelLength->setEnabled(false);
-        caliber->setEnabled(false);
-        feedSystem->setEnabled(false);
-
-        joule->setEnabled(false);
-        gasUsed->setEnabled(false);
-
-        cartridge->setEnabled(false);
-
-        bladeLength->setEnabled(true);
-        hiltType->setEnabled(true);
-        bladeType->setEnabled(true);
-
-        filling->setEnabled(false);
-        detonationMechanism->setEnabled(false);
-        fillingWeight->setEnabled(false);
-
-        //inserimento specifici classe
         fields->addWidget(lBladeLength,0,2);
         fields->addWidget(bladeLength,0,3);
 
         fields->addWidget(lBladeType,1,2);
-        bladeType->setPlaceholderText("Inserisci il tipo di lama. ");
         fields->addWidget(bladeType,1,3);
 
         fields->addWidget(lHiltType,2,2);
-        hiltType->setPlaceholderText("Inserisci il tipo di impugnatura e/o il materiale.(Es. Polimero, a due mani, con crociera a bracci diritti  )");
         fields->addWidget(hiltType,2,3);
-
-
 
         form->update();
         fields->update();
@@ -554,98 +348,17 @@ void Inserimento::slotViewElements(int index)const{
         break;
         case 4://ESPLOSIVO
 
-        //Rimozione campi specifici dalla finestra
-        fields->removeWidget(lRateOfFire);
-        fields->removeWidget(lFiringRange);
-        fields->removeWidget(lMuzzleVelocity);
-        fields->removeWidget(lBarrelLength);
-        fields->removeWidget(lCaliber);
-        fields->removeWidget(lFeedSystem);
-        fields->removeWidget(rateOfFire);
-        fields->removeWidget(firingRange);
-        fields->removeWidget(muzzleVelocity);
-        fields->removeWidget(barrelLength);
-        fields->removeWidget(caliber);
-        fields->removeWidget(feedSystem);
-
-        fields->removeWidget(lJoule);
-        fields->removeWidget(lGasUsed);
-        fields->removeWidget(joule);
-        fields->removeWidget(gasUsed);
-
-        fields->removeWidget(lCartridge);
-        fields->removeWidget(cartridge);
-
-        fields->removeWidget(lBladeLength);
-        fields->removeWidget(lHiltType);
-        fields->removeWidget(lBladeType);
-        fields->removeWidget(bladeLength);
-        fields->removeWidget(hiltType);
-        fields->removeWidget(bladeType);
-
-        rateOfFire->setVisible(false);
-        firingRange->setVisible(false);
-        muzzleVelocity->setVisible(false);
-        barrelLength->setVisible(false);
-        caliber->setVisible(false);
-        feedSystem->setVisible(false);
-        lRateOfFire->setVisible(false);
-        lFiringRange->setVisible(false);
-        lMuzzleVelocity->setVisible(false);
-        lBarrelLength->setVisible(false);
-        lCaliber->setVisible(false);
-        lFeedSystem->setVisible(false);
-
-        joule->setVisible(false);
-        gasUsed->setVisible(false);
-        lJoule->setVisible(false);
-        lGasUsed->setVisible(false);
-
-        cartridge->setVisible(false);
-        lCartridge->setVisible(false);
-
-        bladeLength->setVisible(false);
-        hiltType->setVisible(false);
-        bladeType->setVisible(false);
-        lBladeLength->setVisible(false);
-        lHiltType->setVisible(false);
-        lBladeType->setVisible(false);
-
-        filling->setVisible(true);
-        detonationMechanism->setVisible(true);
-        fillingWeight->setVisible(true);
-        lFilling->setVisible(true);
-        lDetonationMechanism->setVisible(true);
-        lFillingWeight->setVisible(true);
-
-        //Settaggio campi specifici a disabled/enabled
-        rateOfFire->setEnabled(false);
-        firingRange->setEnabled(false);
-        muzzleVelocity->setEnabled(false);
-        barrelLength->setEnabled(false);
-        caliber->setEnabled(false);
-        feedSystem->setEnabled(false);
-
-        joule->setEnabled(false);
-        gasUsed->setEnabled(false);
-
-        cartridge->setEnabled(false);
-
-        bladeLength->setEnabled(false);
-        hiltType->setEnabled(false);
-        bladeType->setEnabled(false);
-
-        filling->setEnabled(true);
-        detonationMechanism->setEnabled(true);
-        fillingWeight->setEnabled(true);
+        setArmaDaFuocoVisible(false);
+        setArmaPneumaticaVisible(false);
+        setArmaAPolvereVisible(false);
+        setArmaBiancaVisible(false);
+        setEsplosivoVisible(true);
 
         //inserimento specifici classe
         fields->addWidget(lFilling,0,2);
-        filling->setPlaceholderText("Inserisci il tipo di lama. ");
         fields->addWidget(filling,0,3);
 
         fields->addWidget(lDetonationMechanism,1,2);
-        detonationMechanism->setPlaceholderText("Inserisci il tipo di impugnatura e/o il materiale.(Es. Polimero, a due mani, con crociera a bracci diritti  )");
         fields->addWidget(detonationMechanism,1,3);
 
         fields->addWidget(lFillingWeight,2,2);
