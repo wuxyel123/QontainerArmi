@@ -31,3 +31,6 @@ std::string ArmaBianca::getInfo() const{//virtual
 std::ostream& operator<<(std::ostream& os,const ArmaBianca& a){
     return os<<a.getInfo();
 }
+std::string ArmaBianca::getTipo() const {
+    return "ArmaBianca";
+}

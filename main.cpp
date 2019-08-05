@@ -5,12 +5,13 @@
 #include "GERARCHIA/armapneumatica.h"
 #include "GERARCHIA/list.h"
 #include "GUI/widget.h"
+#include "modello.h"
 
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Widget w;
+    Widget w(new Modello());
     w.setWindowTitle("Qontainer Armi");
     w.setWindowIcon(QIcon(":/Immagini/icon.png"));
     w.setMinimumSize(400,300);

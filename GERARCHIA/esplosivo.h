@@ -20,6 +20,7 @@ public:
     std::string getDetonationMechanism() const;
     double getFillingWeight() const;
     std::string getInfo() const override;
+    std::string getTipo() const override;
 };
 std::ostream& operator<<(std::ostream&,const Esplosivo&);
 

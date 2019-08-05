@@ -294,7 +294,7 @@ void Inserimento::slotViewElements(int index)const{
         form->update();
         fields->update();
         break;
-        case 1:
+        case 1://ARMA PNEUMATICA
         setArmaDaFuocoVisible(true);
         setArmaPneumaticaVisible(true);
         setArmaAPolvereVisible(false);
@@ -395,6 +395,7 @@ void Inserimento::slotReset()const{
             filling->setText("");
             detonationMechanism->setText("");
             fillingWeight->setValue(0);
+            setAllExtraNotVisible();
 }
 void Inserimento::slotChooseImage(){
     QString file= QFileDialog::getOpenFileName(
@@ -411,32 +412,115 @@ void Inserimento::slotChooseImage(){
 
                 im.save(&b,"JPG");
                 lImg->setPixmap(QPixmap::fromImage(im));
+                imageRawData=utils->getRawData(im);
             }
 
 }
-void Inserimento::slotInserisci(){
-    if (tipoArma->currentIndex()==0 ){
-        QMessageBox::warning(this,"Attenzione","Devi selezionare il tipo di arma che vuoi inserire.");
-    }
-    else{
-        QMessageBox checkCampi;
-        checkCampi.setWindowTitle("Inserimento");
-        checkCampi.setIcon(QMessageBox::Question);
-        checkCampi.setText("Procedere all'inserimento?");
-        checkCampi.setInformativeText("Una volta confermato l'inserimento, non sarà più possibile modificare i campi dati ad eccezzione di prezzo e foto.");
-        checkCampi.setStandardButtons(QMessageBox::Cancel |QMessageBox::Save);
-        checkCampi.setDefaultButton(QMessageBox::Save);
-        int ret = checkCampi.exec();
-        switch (ret) {
-            case QMessageBox::Save:
-                //salvataggio dati in container da aggiungere
-            break;
-            case QMessageBox::Cancel:
-               //Non deve far nulla
-            break;
-            default:
-                QMessageBox::critical(this,"ERRORE!","Qualcosa è andato storto durante l'inserimento dei dati.");
-            break;
-        }
-    }
+
+comboBoxTipoArma* Inserimento::getCBTipoArma(){
+    return tipoArma;
 }
+
+QPushButton* Inserimento::getInserisci(){
+    return inserisci;
+}
+
+Arma* Inserimento::getWeaponToInsert(){
+    switch (tipoArma->currentIndex()) {
+        case 1:
+            armaDaInserire=new ArmaPneumatica(
+                        //Arma
+                        lenght->value(),
+                        weight->value(),
+                        price->value(),
+                        designer->text().toStdString(),
+                        materials->toPlainText().toStdString(),
+                        name->text().toStdString(),
+                        imageRawData,
+                        licenseNeeded->isChecked(),
+                        //ArmaDaFuoco
+                        rateOfFire->value(),
+                        firingRange->value(),
+                        muzzleVelocity->value(),
+                        barrelLength->value(),
+                        caliber->text().toStdString(),
+                        feedSystem->toPlainText().toStdString(),
+                        //ArmaPneumatica
+                        joule->value(),
+                        gasUsed->text().toStdString()
+                        );
+        break;
+        case 2:
+            armaDaInserire=new ArmaAPolvere(
+                        //Arma
+                        lenght->value(),
+                        weight->value(),
+                        price->value(),
+                        designer->text().toStdString(),
+                        materials->toPlainText().toStdString(),
+                        name->text().toStdString(),
+                        imageRawData,
+                        licenseNeeded->isChecked(),
+                        //ArmaDaFuoco
+                        rateOfFire->value(),
+                        firingRange->value(),
+                        muzzleVelocity->value(),
+                        barrelLength->value(),
+                        caliber->text().toStdString(),
+                        feedSystem->toPlainText().toStdString(),
+                        //ArmaAPolvere
+                        cartridge->toPlainText().toStdString()
+                        );
+        break;
+        case 3:
+            armaDaInserire=new ArmaBianca(
+                        //Arma
+                        lenght->value(),
+                        weight->value(),
+                        price->value(),
+                        designer->text().toStdString(),
+                        materials->toPlainText().toStdString(),
+                        name->text().toStdString(),
+                        imageRawData,
+                        licenseNeeded->isChecked(),
+                        //ArmaBianca
+                        bladeLength->value(),
+                        bladeType->toPlainText().toStdString(),
+                        hiltType->toPlainText().toStdString()
+                        );
+        break;
+        case 4:
+            armaDaInserire=new Esplosivo(
+                        //Arma
+                        lenght->value(),
+                        weight->value(),
+                        price->value(),
+                        designer->text().toStdString(),
+                        materials->toPlainText().toStdString(),
+                        name->text().toStdString(),
+                        imageRawData,
+                        licenseNeeded->isChecked(),
+                        //Esplosivo
+                        filling->text().toStdString(),
+                        detonationMechanism->toPlainText().toStdString(),
+                        fillingWeight->value()
+                        );
+        break;
+    }
+    return armaDaInserire;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

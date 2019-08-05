@@ -30,3 +30,6 @@ std::string ArmaPneumatica::getInfo() const{
 std::ostream& operator<<(std::ostream& os,const ArmaPneumatica& a){
     return os<<a.getInfo();
 }
+std::string ArmaPneumatica::getTipo() const {
+    return "ArmaPneumatica";
+}

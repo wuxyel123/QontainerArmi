@@ -49,3 +49,6 @@ std::string ArmaDaFuoco::getInfo() const{//virtual
 std::ostream& operator<<(std::ostream& os,const ArmaDaFuoco& a){
     return os<<a.getInfo();
 }
+std::string ArmaDaFuoco::getTipo() const {
+    return "ArmaDaFuoco";
+}

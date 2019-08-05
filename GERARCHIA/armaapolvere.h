@@ -13,6 +13,7 @@ public:
     bool operator!=(const ArmaAPolvere&) const;
     std::string getCartridge() const;
     std::string getInfo() const override;
+    std::string getTipo() const override;
 };
 std::ostream& operator<<(std::ostream&,const ArmaAPolvere&);
 

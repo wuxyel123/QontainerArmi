@@ -71,6 +71,7 @@ signals:
 
 public slots:
     void slotViewElements(int)const;
+    void slotReset()const;
 private slots:
     void slotPrice(double);
     void slotBladeLength(double);

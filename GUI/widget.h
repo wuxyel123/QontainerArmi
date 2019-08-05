@@ -8,7 +8,14 @@
 #include <QLabel>
 #include "inserimento.h"
 #include "ricerca.h"
+#include "elimina.h"
 #include "dettagli.h"
+#include "GERARCHIA/arma.h"
+#include "GERARCHIA/armaapolvere.h"
+#include "GERARCHIA/armabianca.h"
+#include "GERARCHIA/armapneumatica.h"
+#include "GERARCHIA/esplosivo.h"
+#include "modello.h"
 
 namespace Ui {
 class Widget;
@@ -19,11 +26,12 @@ class Widget : public QWidget
     Q_OBJECT
 
 public:
-    explicit Widget(QWidget *parent = nullptr);
+    explicit Widget(Modello*,QWidget *parent = nullptr);
     ~Widget();
 
 private:
     Ui::Widget *ui;
+    Modello* modello;
     QPushButton *cerca;
     QPushButton *inserisci;
     QPushButton *visualizza;
@@ -32,6 +40,7 @@ private:
     QPushButton *advancedDelete;
     QLabel *img;
     Ricerca *r;
+    Elimina *e;
     Inserimento *i;    
     Dettagli *d;
 
@@ -46,6 +55,12 @@ public slots:
     void nextClicked();
     void prevClicked();
     void advancedDeleteClicked();
+    //SLOT PER SIGNALS ESTERNI
+    void slotInserimento();
+    void slotCerca();
+    void slotElimina();//Eliminazione avanzata
+    void slotDelete();//elimina di "Dettagli"
+    void slotSalva();
 
 };
 

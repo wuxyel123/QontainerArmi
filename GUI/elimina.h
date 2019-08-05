@@ -1,5 +1,5 @@
-#ifndef RICERCA_H
-#define RICERCA_H
+#ifndef ELIMINA_H
+#define ELIMINA_H
 
 #include <QDialog>
 #include <QVBoxLayout>
@@ -7,23 +7,22 @@
 #include <QPushButton>
 #include "layoutricercaelimina.h"
 
-class Ricerca : public QDialog
+class Elimina : public QDialog
 {
     Q_OBJECT
 private:
-    layoutRicercaElimina *ric;
+    layoutRicercaElimina *del;
     QVBoxLayout* form;
     QHBoxLayout* buttons;
-    QPushButton* cerca,*reset;
+    QPushButton* elimina,*reset;
 
 public:
-    explicit Ricerca(QWidget *parent = nullptr);
+    explicit Elimina(QWidget *parent = nullptr);
     layoutRicercaElimina* getLCampi();
-    QPushButton* getCerca();
+    QPushButton* getElimina();
 
 signals:
 
 };
 
-
-#endif // RICERCA_H
+#endif // ELIMINA_H

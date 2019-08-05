@@ -27,3 +27,7 @@ std::string Esplosivo::getInfo() const{
 std::ostream& operator<<(std::ostream& os,const Esplosivo& a){
     return os<<a.getInfo();
 }
+std::string Esplosivo::getTipo() const {
+    return "Esplosivo";
+}
+

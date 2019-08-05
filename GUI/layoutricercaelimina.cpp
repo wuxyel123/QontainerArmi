@@ -196,6 +196,22 @@ void layoutRicercaElimina::slotViewElements(int index)const{
     }
 
 }
+
+void layoutRicercaElimina::slotReset()const{
+    tipoArma->setCurrentIndex(0);
+    name->setText("");
+    designer->setText("");
+    pricetMin->setValue(0);
+    priceMax->setValue(999999);
+    licenseNeeded->setChecked(false);
+    caliber->setText("");
+    joule->setValue(0);
+    bladeLengthMin->setValue(0);
+    bladeLengthMax->setValue(300);
+    fillingWeight->setValue(0);
+    setAllExtraNotVisible();
+}
+
 void layoutRicercaElimina::slotPrice(double val){
     pricetMin->setMaximum(val);
 }

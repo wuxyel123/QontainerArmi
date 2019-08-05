@@ -42,11 +42,15 @@ bool Arma::isLicenseNeeded() const{
 }
 std::string Arma::getInfo() const{
     return  "Nome: "+name+"\n"+
-            "Designer "+designer+"\n"+
-            "Materiali "+materials+"\n"+
-            "Lunghezza "+std::to_string(length)+" cm \n"+
-            "Peso "+std::to_string(weight)+" kg \n"+
+            "Designer: "+designer+"\n"+
+            "Materiali: "+materials+"\n"+
+            "Lunghezza: "+std::to_string(length)+" cm \n"+
+            "Peso: "+std::to_string(weight)+" kg \n"+
             "Porto d'armi "+ (needLicense?"":"non ")
             +"necessario \n";
 
+}
+
+std::string Arma::getTipo() const {
+    return "Arma";
 }

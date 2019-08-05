@@ -23,5 +23,6 @@ public:
     void setImg(std::string);
     bool isLicenseNeeded() const;
     virtual std::string getInfo() const;
+    virtual std::string getTipo() const;
 };
 #endif // ARMA_H

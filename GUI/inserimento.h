@@ -17,12 +17,21 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QBuffer>
+#include "GERARCHIA/arma.h"
+#include "GERARCHIA/armaapolvere.h"
+#include "GERARCHIA/armabianca.h"
+#include "GERARCHIA/armapneumatica.h"
+#include "GERARCHIA/esplosivo.h"
+#include "imageutility.h"
 
 class Inserimento : public QDialog
 {
     Q_OBJECT
 public:
     explicit Inserimento(QWidget *parent = nullptr);
+    comboBoxTipoArma* getCBTipoArma();
+    QPushButton* getInserisci();
+    Arma* getWeaponToInsert();
 
 private:
     void setAllExtraNotVisible() const;
@@ -87,15 +96,17 @@ private:
 
     QLabel *lImg;
 
+    Arma* armaDaInserire;
+    std::string imageRawData;
+    imageUtility* utils;
+
 private slots:
     void slotReset()const;
+    void slotViewElements(int)const;
+    void slotChooseImage();
 
 signals:
 
-public slots:
-    void slotViewElements(int)const;
-    void slotChooseImage();
-    void slotInserisci();
 };
 
 #endif // INSERIMENTO_H

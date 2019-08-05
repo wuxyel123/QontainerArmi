@@ -20,6 +20,7 @@ public:
     std::string getFeedSystem() const;
     double getPrice() const override;
     std::string getInfo() const override; 
+    std::string getTipo() const override;;
 };
 std::ostream& operator<<(std::ostream&,const ArmaDaFuoco&);
 

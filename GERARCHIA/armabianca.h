@@ -15,7 +15,8 @@ public:
     std::string getHiltType() const;
     std::string getBladeType() const;
     double getPrice() const override;
-    std::string getInfo() const override; 
+    std::string getInfo() const override;
+    std::string getTipo() const override;
 };
 std::ostream& operator<<(std::ostream&,const ArmaBianca&); 
 

@@ -37,7 +37,11 @@ SOURCES += \
         GUI/comboboxtipoarma.cpp \
         GUI/dettagli.cpp \
         GUI/ricerca.cpp \
-    GUI/layoutricercaelimina.cpp
+    GUI/layoutricercaelimina.cpp \
+    GUI/elimina.cpp \
+    GUI/imageutility.cpp \
+    modello.cpp \
+    nofilefoundexception.cpp
 
 HEADERS += \
         GUI/widget.h \
@@ -52,7 +56,11 @@ HEADERS += \
         GUI/comboboxtipoarma.h \
         GUI/dettagli.h \
         GUI/ricerca.h \
-    GUI/layoutricercaelimina.h
+    GUI/layoutricercaelimina.h \
+    GUI/elimina.h \
+    GUI/imageutility.h \
+    modello.h \
+    nofilefoundexception.h
 RESOURCES += \
     resources.qrc
 DISTFILES += \
@@ -60,6 +68,7 @@ DISTFILES += \
     Immagini/icon.png \
     Immagini/noData.png \
     Immagini/deleteIcon.png \
+    Immagini/searchIcon.png \
     Immagini/info.png
 
 # Default rules for deployment.

@@ -19,3 +19,6 @@ std::string ArmaAPolvere::getInfo() const{
 std::ostream& operator<<(std::ostream& os,const ArmaAPolvere& a){
     return os<<a.getInfo();
 }
+std::string ArmaAPolvere::getTipo() const {
+    return "ArmaAPolvere";
+}
