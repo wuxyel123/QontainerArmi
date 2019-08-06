@@ -25,11 +25,13 @@ public:
     Modello(std::string ="../QontainerArmi/dati.xml");
     ~Modello();
     //Metodi per list
-    void push_end(Arma*);
+    void push(Arma*);
     List<Arma*>::iterator begin();
-    List<Arma*>::iterator end();
+    List<Arma*>::iterator last();
+    List<Arma*>::iterator ptend();
     List<Arma*>::constiterator cbegin() const;
-    List<Arma*>::constiterator cend() const;
+    List<Arma*>::constiterator clast()const;
+    List<Arma*>::constiterator cptend() const;
     unsigned int getSize()const;
     bool isEmpty() const;
     void erase(List<Arma*>::iterator);

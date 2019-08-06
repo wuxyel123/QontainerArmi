@@ -43,8 +43,7 @@ private:
     Elimina *e;
     Inserimento *i;    
     Dettagli *d;
-
-
+    Arma* toInsert;
 
 signals:
 

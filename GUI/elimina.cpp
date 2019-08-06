@@ -20,7 +20,6 @@ Elimina::Elimina(QWidget *parent) : QDialog(parent),
 
     //CONNECT
     connect(reset,SIGNAL(clicked()),del,SLOT(slotReset()));
-    connect(elimina,SIGNAL(clicked()),this,SLOT(slotCerca()));
 }
 
 layoutRicercaElimina* Elimina::getLCampi(){

@@ -140,7 +140,6 @@ Inserimento::Inserimento(QWidget *parent) : QDialog(parent),
     connect(tipoArma,SIGNAL(activated(int)),this,SLOT(slotViewElements(int)));
     connect(selImg,SIGNAL(clicked()), this, SLOT(slotChooseImage()));
     connect(reset,SIGNAL(clicked()),this,SLOT(slotReset()));
-    connect(inserisci,SIGNAL(clicked()),this,SLOT(slotInserisci()));
 }
 void Inserimento::setAllExtraNotVisible()const {
     setArmaDaFuocoVisible(false);

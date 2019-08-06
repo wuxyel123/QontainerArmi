@@ -1,21 +1,29 @@
-#include "Modello.h"
+#include "modello.h"
+#include "iostream"
+#include "QMessageBox"
 
-Modello::Modello(std::string p):lista(),srcRes(),path(p){}
+Modello::Modello(std::string p):lista(new List<Arma*>()),srcRes(new List<Arma*>()),path(p){}
 
-void  Modello::push_end(Arma* a){
+void  Modello::push(Arma* a){
     lista->pushBack(a);
 }
 List<Arma*>::iterator Modello::begin(){
     return lista->begin();
 }
-List<Arma*>::iterator Modello::end(){
+List<Arma*>::iterator Modello::last(){
     return lista->end();
+}
+List<Arma*>::iterator Modello::ptend(){
+    return lista->ptend();
 }
 List<Arma*>::constiterator Modello::cbegin() const{
     return lista->cbegin();
 }
-List<Arma*>::constiterator Modello::cend() const{
+List<Arma*>::constiterator Modello::clast()const{
     return lista->cend();
+}
+List<Arma*>::constiterator Modello::cptend() const{
+    return lista->cptend();
 }
 unsigned int Modello::getSize()const{
     return lista->_size();
@@ -30,10 +38,11 @@ void Modello::clear(){
     lista->_clear();
 }
 void Modello::save()const{
-
-    QSaveFile file(QString::fromStdString(path));
+    /*QSaveFile file(QString::fromStdString(path));
        if(!file.open(QIODevice::WriteOnly)) {
+           std::cout<<"Errore nell'apertura del file";
            throw NoFileFoundException("Errore nell'apertura del file");
+
        }
 
        QXmlStreamWriter writer(&file);
@@ -104,7 +113,7 @@ void Modello::save()const{
 
        writer.writeEndElement();
        writer.writeEndDocument();
-       file.commit();
+       file.commit();*/
 }
 
 void Modello::load(){

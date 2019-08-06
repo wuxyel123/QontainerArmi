@@ -137,7 +137,8 @@ void Widget::slotInserimento(){
         int ret = checkCampi.exec();
         switch (ret) {
             case QMessageBox::Save:
-                modello->push_end(i->getWeaponToInsert());
+                toInsert=i->getWeaponToInsert();
+                modello->push(toInsert);
                 modello->save();
             break;
             case QMessageBox::Cancel:
