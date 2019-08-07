@@ -1,6 +1,6 @@
 #ifndef MODELLO_H
 #define MODELLO_H
-#include <GERARCHIA/arma.h>
+#include "GERARCHIA/arma.h"
 #include "GERARCHIA/armaapolvere.h"
 #include "GERARCHIA/armabianca.h"
 #include "GERARCHIA/armapneumatica.h"
@@ -19,11 +19,13 @@ class Modello
 private:
     List<Arma*>* lista;
     List<Arma*>* srcRes;
-    std::string path;
+    QString path;
 
 public:
-    Modello(std::string ="../QontainerArmi/dati.xml");
+    Modello(QString=nullptr);
     ~Modello();
+    QString getPath();
+    void setPath(QString);
     //Metodi per list
     void push(Arma*);
     List<Arma*>::iterator begin();

@@ -13,6 +13,9 @@
 #include <QFileInfo>
 #include <QBuffer>
 #include <QMessageBox>
+#include "GERARCHIA/list.h"
+#include "GERARCHIA/arma.h"
+#include "imageutility.h"
 
 class Dettagli : public QDialog
 {
@@ -21,7 +24,10 @@ public:
     explicit Dettagli(QWidget *parent = nullptr);
     QPushButton *getSalva();
     QPushButton *getElimina();
+    std::string getImg()const;
+    double getPrice()const;
     void layoutModificaVisible(bool)const;
+    void update_values(std::string,std::string)const;
 
 private:
     QTextEdit* info;
@@ -37,11 +43,14 @@ private:
     QHBoxLayout* layoutDettagli;
     QHBoxLayout* buttons;
     QGridLayout* lModifica;
+    imageUtility *imgUti;
+    std::string imageRawData;
 
 signals:
 
 private slots:
     void slotModifica()const;
+    void slotChooseImage();
 };
 
 #endif // DETTAGLI_H

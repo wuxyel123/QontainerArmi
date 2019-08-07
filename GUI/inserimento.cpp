@@ -394,6 +394,7 @@ void Inserimento::slotReset()const{
             filling->setText("");
             detonationMechanism->setText("");
             fillingWeight->setValue(0);
+            lImg->clear();
             setAllExtraNotVisible();
 }
 void Inserimento::slotChooseImage(){

@@ -16,6 +16,7 @@
 #include "GERARCHIA/armapneumatica.h"
 #include "GERARCHIA/esplosivo.h"
 #include "modello.h"
+#include "imageutility.h"
 
 namespace Ui {
 class Widget;
@@ -28,6 +29,8 @@ class Widget : public QWidget
 public:
     explicit Widget(Modello*,QWidget *parent = nullptr);
     ~Widget();
+    void pathSaveLoad();
+    void anyDataFound(bool);
 
 private:
     Ui::Widget *ui;
@@ -38,12 +41,16 @@ private:
     QPushButton *next;
     QPushButton *prev;
     QPushButton *advancedDelete;
+    QPushButton *loadNewFile;
     QLabel *img;
     Ricerca *r;
     Elimina *e;
     Inserimento *i;    
     Dettagli *d;
+    imageUtility* imgUti;
     Arma* toInsert;
+    List<Arma*>::iterator first,last,current;
+    bool noData;
 
 signals:
 
@@ -54,12 +61,14 @@ public slots:
     void nextClicked();
     void prevClicked();
     void advancedDeleteClicked();
+    void slotLoad();
     //SLOT PER SIGNALS ESTERNI
     void slotInserimento();
     void slotCerca();
     void slotElimina();//Eliminazione avanzata
     void slotDelete();//elimina di "Dettagli"
     void slotSalva();
+
 
 };
 

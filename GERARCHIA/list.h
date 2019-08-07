@@ -193,27 +193,39 @@ unsigned int List<T>::_size() const{
 
 template<class T>
 void List<T>::erase(iterator it){//elimina it
-   Nodo* pt=it.pt;//per amicizia
-   Nodo* tmp=pt;
-   if(pt==first&&first->next==nullptr){
-       first=nullptr;
-       last=nullptr;
-   }
-   if(pt==first){
-        first=first->next;
-        first->prev=tmp->prev;
-        pt=pt->next;
-        pt->prev=tmp->prev;
-   }
-   if(pt==last){
-        last=last->prev;
-        last->next=tmp->next;
-        pt=pt->prev;
-        pt->next=tmp->next;
-   }
-   
-   size--;
-   delete tmp;
+    if(size>1){
+        Nodo* pt=it.pt;//per amicizia
+        Nodo* tmp;
+        if(pt==first){
+             first=first->next;
+             first->prev=pt->prev;
+             pt->next=0;
+             pt->prev=0;
+        }
+        else if(pt==last){
+             last=last->prev;
+             last->next=pt->next;
+             pt->next=0;
+             pt->prev=0;
+        }
+        else{
+            tmp=pt;
+            tmp=tmp->prev;
+            tmp->next=pt->next;
+            tmp->next->prev=tmp;
+            pt->next=0;
+            pt->prev=0;
+        }
+        delete pt;
+    }
+    else{
+        delete first;
+        first=nullptr;
+        last=nullptr;
+    }
+    size--;
+
+
 }
 
 template<class T>

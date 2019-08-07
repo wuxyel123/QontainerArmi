@@ -101,9 +101,10 @@ private:
     imageUtility* utils;
 
 private slots:
-    void slotReset()const;
     void slotViewElements(int)const;
     void slotChooseImage();
+public slots:
+    void slotReset()const;
 
 signals:
 

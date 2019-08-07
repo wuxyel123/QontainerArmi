@@ -6,6 +6,8 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include "layoutricercaelimina.h"
+#include "GERARCHIA/list.h"
+#include <GERARCHIA/arma.h>
 
 class Ricerca : public QDialog
 {
@@ -15,6 +17,7 @@ private:
     QVBoxLayout* form;
     QHBoxLayout* buttons;
     QPushButton* cerca,*reset;
+
 
 public:
     explicit Ricerca(QWidget *parent = nullptr);

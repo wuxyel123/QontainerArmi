@@ -20,7 +20,7 @@ Dettagli::Dettagli(QWidget *parent) : QDialog(parent),
     //SIZE POLICY
     this->setMinimumSize(575,315);
     this->setMaximumSize(1150,630);
-    img->setMaximumSize(600,600);
+    img->setMaximumSize(400,400);
     img->setScaledContents(true);
     info->setMaximumSize(500,500);
     //price->setMaximumSize(100,30);
@@ -39,20 +39,9 @@ Dettagli::Dettagli(QWidget *parent) : QDialog(parent),
     //RANGE
     price->setMaximum(999999);
 
-    //IMG DEFAULT
-    QString file=":/Immagini/noData.png";
-    QFileInfo relativePath(file);
-    if(file!=""){
-    QImage im(file);
-    QByteArray  array;
-    QBuffer b(&array);
-    im.save(&b,"JPG");
-    img->setPixmap(QPixmap::fromImage(im));
-    }
-
-
-    //INFO READ ONLY
+    //INFO READ ONLY E FONT
     info->setReadOnly(true);
+    info->setFontPointSize(12);
 
     //INSERIMENTO IN LAYOUT
     layoutDettagli->addWidget(info);
@@ -79,6 +68,19 @@ Dettagli::Dettagli(QWidget *parent) : QDialog(parent),
 
     //SLOT
     connect(modifica,SIGNAL(clicked()),this,SLOT(slotModifica()));
+    connect(btnImg,SIGNAL(clicked()),this,SLOT(slotChooseImage()));
+
+}
+
+void Dettagli::update_values(std::string im,std::string inf)const{
+    //Load dati
+    if(im!=""){
+        img->setPixmap(imgUti->getImage(im));
+    }
+    else{
+        img->setText("Nessun immagine trovata per l'arma.");
+    }
+    info->setText(QString::fromStdString(inf));
 
 }
 
@@ -91,6 +93,14 @@ QPushButton* Dettagli::getSalva(){
 }
 QPushButton* Dettagli::getElimina(){
     return elimina;
+}
+
+std::string Dettagli::getImg()const{
+    if(imageRawData.size()>0)   return imageRawData;
+    return "";
+}
+double Dettagli::getPrice()const{
+    return price->value();
 }
 
 void Dettagli::layoutModificaVisible(bool b)const{
@@ -110,6 +120,25 @@ void Dettagli::layoutModificaVisible(bool b)const{
     modifica->setVisible(!b);
     buttons->update();
     form->update();
+}
+
+void Dettagli::slotChooseImage(){
+    QString file= QFileDialog::getOpenFileName(
+                this,
+                tr("Choose image"),
+                "../",
+                "Image file (*.jpg)"
+                );
+        QFileInfo relativePath(file);
+        if(file!=""){
+                QImage im(file);
+                QByteArray  array;
+                QBuffer b(&array);
+
+                im.save(&b,"JPG");
+                imageRawData=imgUti->getRawData(im);
+            }
+
 }
 
 
