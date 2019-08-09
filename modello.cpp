@@ -38,8 +38,9 @@ bool Modello::isEmpty() const{
     return lista->empty();
 }
 void Modello::erase(List<Arma*>::iterator it){
-    lista->erase((*it),it,it);
-    //lista->erase(it);
+    //lista->erase((*it),it,it);
+    lista->erase(it);
+
 }
 void Modello::clear(){
     lista->_clear();
@@ -221,11 +222,14 @@ void Modello::load(){
 }
 
 //Metodi per srcRes
-List<Arma*>::constiterator Modello::res_cbegin() const{
-    return srcRes->cbegin();
+void  Modello::res_push(Arma* a){
+    srcRes->pushBack(a);
 }
-List<Arma*>::constiterator Modello::res_cend() const{
-    return srcRes->cend();
+List<Arma*>::iterator Modello::res_begin() const{
+    return srcRes->begin();
+}
+List<Arma*>::iterator Modello::res_end() const{
+    return srcRes->end();
 }
 unsigned int Modello::res_getSize()const{
     return srcRes->_size();

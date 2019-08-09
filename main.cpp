@@ -10,7 +10,7 @@
 
 int main(int argc, char *argv[])
 {
-   QApplication a(argc, argv);
+    QApplication a(argc, argv);
     Widget w(new Modello());
     w.setWindowTitle("Qontainer Armi");
     w.setWindowIcon(QIcon(":/Immagini/icon.png"));
@@ -20,9 +20,9 @@ int main(int argc, char *argv[])
     return a.exec();
     /*List<Arma*> l;
     Arma* a1=new Esplosivo(1,1,1,"1","1","1");
-    Arma* a2=new Esplosivo(2,2,2,"2","2","2");
-    Arma* a3=new Esplosivo(3,3,3,"3","3","3");
-    Arma* a4=new Esplosivo(4,4,4,"4","4","4");
+    Arma* a2=new ArmaBianca(2,2,2,"2","2","2");
+    Arma* a3=new ArmaAPolvere(3,3,3,"3","3","3");
+    Arma* a4=new ArmaPneumatica(4,4,4,"4","4","4");
     Arma* a5=new Esplosivo(5,5,5,"5","5","5");
     Arma* a6=new Esplosivo(6,6,6,"6","6","6");
     Arma* a7=new Esplosivo(7,7,7,"7","7","7");
@@ -45,7 +45,10 @@ int main(int argc, char *argv[])
     l.erase(it);
     it=l.begin();
    l.erase(it);
-   std::cout<<(*it)->getInfo();*/
-
+   std::cout<<(*it)->getInfo();
+    std::cout<<a1->getTipo()<<std::endl;
+    std::cout<<a2->getTipo()<<std::endl;
+    std::cout<<a3->getTipo()<<std::endl;
+    std::cout<<a4->getTipo()<<std::endl;*/
 
 }

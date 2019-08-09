@@ -5,7 +5,7 @@ Inserimento::Inserimento(QWidget *parent) : QDialog(parent),
 
     lLenght(new QLabel("Lunghezza (cm):",this)),
     lWeight(new QLabel("Peso (kg):",this)),
-    lPrice(new QLabel("Prezzo (€):",this)),
+    lPrice(new QLabel("Prezzo base(€):",this)),
     lDesigner(new QLabel("Designer:",this)),
     lMaterials(new QLabel("Materiali:",this)),
     lName(new QLabel("Nome:",this)),

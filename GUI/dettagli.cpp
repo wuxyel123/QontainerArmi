@@ -66,6 +66,7 @@ Dettagli::Dettagli(QWidget *parent) : QDialog(parent),
     form->addItem(layoutDettagli);
     form->addItem(buttons);
 
+    this->setWindowTitle("Dettagli-Qontainer Armi");
     //SLOT
     connect(modifica,SIGNAL(clicked()),this,SLOT(slotModifica()));
     connect(btnImg,SIGNAL(clicked()),this,SLOT(slotChooseImage()));

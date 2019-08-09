@@ -8,11 +8,10 @@ Widget::Widget(Modello* m,QWidget *parent) :
     visualizza(new QPushButton("Dettagli",this)),
     next(new QPushButton("Successivo >>",this)),
     prev(new QPushButton("<< Precedente",this)),
-    advancedDelete(new QPushButton("Eliminzazione \n Avanzata",this)),
     loadNewFile(new QPushButton("Carica nuovo \n file",this)),
-    img(new QLabel("IMMAGINE",this)),
+    img(new QLabel(this)),
     r(new Ricerca(this)),
-    e(new Elimina(this)),
+    risRic(new showRisultatiRicerca(this)),
     i(new Inserimento(this)),
     d(new Dettagli(this)),
     imgUti(new imageUtility()),
@@ -27,11 +26,9 @@ Widget::Widget(Modello* m,QWidget *parent) :
     //SIZE POLICY
     cerca->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
     inserisci->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
-    advancedDelete->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
     loadNewFile->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
     cerca->setMaximumSize(300,200);
     inserisci->setMaximumSize(300,200);
-    advancedDelete->setMaximumSize(300,200);
     loadNewFile->setMaximumSize(300,200);
     prev->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
     visualizza->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
@@ -46,7 +43,6 @@ Widget::Widget(Modello* m,QWidget *parent) :
     bottoniSx->addWidget(loadNewFile);
     bottoniSx->addWidget(cerca);
     bottoniSx->addWidget(inserisci);
-    bottoniSx->addWidget(advancedDelete);
 
     imgButtons->setSpacing(50);
     imgButtons->addWidget(prev);
@@ -65,13 +61,14 @@ Widget::Widget(Modello* m,QWidget *parent) :
     connect(visualizza,SIGNAL(clicked()),this,SLOT(visualizzaClicked()));
     connect(next,SIGNAL(clicked()),this,SLOT(nextClicked()));
     connect(prev,SIGNAL(clicked()),this,SLOT(prevClicked()));
-    connect(advancedDelete,SIGNAL(clicked()),this,SLOT(advancedDeleteClicked()));
     connect(loadNewFile,SIGNAL(clicked()),this,SLOT(slotLoad()));
     connect(i->getInserisci(),SIGNAL(clicked()),this,SLOT(slotInserimento()));
     connect(r->getCerca(),SIGNAL(clicked()),this,SLOT(slotCerca()));
-    connect(e->getElimina(),SIGNAL(clicked()),this,SLOT(slotElimina()));
     connect(d->getSalva(),SIGNAL(clicked()),this,SLOT(slotSalva()));
     connect(d->getElimina(),SIGNAL(clicked()),this,SLOT(slotDelete()));
+    connect(risRic->getDettagliRicerca()->getElimina(),SIGNAL(clicked()),this,SLOT(slotDeleteFromSrc()));
+    connect(risRic->getDettagliRicerca()->getSalva(),SIGNAL(clicked()),this,SLOT(slotSalvaFromSrc()));
+    connect(risRic->getEliminaTutto(),SIGNAL(clicked()),this,SLOT(slotEliminaTutto()));
 
     if(modello->getPath()==nullptr) pathSaveLoad();
     if(modello->getPath()!=nullptr){
@@ -146,7 +143,7 @@ void Widget::srcClicked(){
     (*r).setModal(true);
     (*r).show();
     //Info
-    QMessageBox::information(e,"Info","Ricorda di compilare solo i campi secondo i quali vuoi effettuare la ricerca.\n"
+    QMessageBox::information(r,"Info","Ricorda di compilare solo i campi secondo i quali vuoi effettuare la ricerca.\n"
                                          "Info utili:\n"
                                          "-Se non scegli il tipo di arma verranno cercate tutte le armi che soddisfano i restanti parametri.\n"
                                          "-Se non compili uno dei restanti parametri non verrà considerato ai fini della ricerca.\n"
@@ -160,20 +157,7 @@ void Widget::insertClicked(){
     (*i).show();
 
 }
-void Widget::advancedDeleteClicked(){
-    (*e).setWindowTitle("Eliminazione avanzata-Qontainer Armi");
-    (*e).setModal(true);
-    (*e).show();
-    //Info
-    QMessageBox::information(e,"Info","Ricorda di compilare solo i campi secondo i quali vuoi effettuare l'eliminazione.\n"
-                                         "Info utili:\n"
-                                         "-Se non scegli il tipo di arma verranno eliminate tutte le armi che soddisfano i restanti parametri.\n"
-                                         "-Se non compili uno dei restanti parametri non verrà considerato ai fini dell'eliminazione.\n"
-                                         "-Se scegli solo il tipo di arma verranno eliminate tutte le armi di quel tipo."
-                                         "-Se non compili nulla eliminerai l'intera lista.");
-}
 void Widget::visualizzaClicked(){
-    (*d).setWindowTitle("Dettagli-Qontainer Armi");
     (*d).setModal(true);
     (*d).update_values((*current)->getImg(),(*current)->getInfo());
     (*d).show();
@@ -254,53 +238,179 @@ void Widget::slotInserimento(){
 }
 
 void Widget::slotCerca(){
+    //Elimina il risultato della precedente ricerca
+    modello->res_clear();
+    //Inizializzazione paramentri di ricerca
+    int tipo=r->getLCampi()->getTipo();
+    QString name=r->getLCampi()->getName();
+    QString designer=r->getLCampi()->getDesigner();
+    double priceMin=r->getLCampi()->getPriceMin();
+    double priceMax=r->getLCampi()->getPriceMax();
+    int licenseNeeded=r->getLCampi()->getLicenseNeeded();
+    //Arma da fuoco
+    QString caliber=r->getLCampi()->getCaliber();
+    //arma pneumatica
+    double joule=r->getLCampi()->getJoule();
+    //arma bianca
+    double bladeLengthMin=r->getLCampi()->getBladeLengthMin();
+    double bladeLengthMax=r->getLCampi()->getBladeLengthMax();
+    //esplosivo
+    double fillingWeight=r->getLCampi()->getFillingWeight();
+    bool insertThis;
+    //Ricerca
+    /*  QString::compare
+    *   Ritorna 0 se le 2 stringhe sono uguali altrimenti numero intero diverso da 0
+    */
+
+    for(auto it=modello->begin();it!=modello->ptend();++it){
+        insertThis=false;
+        //controllo su campi base di arma
+        if(
+                (!QString::compare( QString::fromStdString((*it)->getName()),name,Qt::CaseInsensitive)||name=="")&&
+                (!QString::compare( QString::fromStdString((*it)->getDesigner()),designer,Qt::CaseInsensitive)||designer=="")&&
+                ((*it)->getPrice()>=priceMin&&(*it)->getPrice()<=priceMax)
+        ){
+            if(licenseNeeded==0){insertThis=true;}
+            else if(licenseNeeded==1){
+                if((*it)->isLicenseNeeded()==true)insertThis=true;
+                else insertThis=false;
+            }
+            else if(licenseNeeded==2){
+                if((*it)->isLicenseNeeded()==false)insertThis=true;
+                else insertThis=false;
+            }
+        }
+        //Se insert this==true proseguo altrimenti non soddisfa i parametri
+        if(insertThis){
+            if(tipo==0){
+                modello->res_push((*it));
+            }
+            else if (tipo==1) {
+                if((*it)->getTipo()=="ArmaPneumatica"){
+                    ArmaPneumatica* a=static_cast<ArmaPneumatica*>((*it));
+                    if(
+                            (!QString::compare( QString::fromStdString(a->getCaliber()),caliber,Qt::CaseInsensitive)||caliber=="")&&
+                            (a->getJoule()==joule||joule==0)
+                      ){
+                        modello->res_push((*it));
+                      }
+                }
+            }
+            else if (tipo==2) {
+                if((*it)->getTipo()=="ArmaAPolvere"){
+                    ArmaAPolvere* a=static_cast<ArmaAPolvere*>((*it));
+                    if(
+                            (!QString::compare( QString::fromStdString(a->getCaliber()),caliber,Qt::CaseInsensitive)||caliber=="")
+                      ){
+                        modello->res_push((*it));
+                      }
+                }
+            }
+            else if (tipo==3) {
+                if((*it)->getTipo()=="ArmaBianca"){
+                    ArmaBianca* a=static_cast<ArmaBianca*>((*it));
+                    if(
+                            (a->getBladeLength()>=bladeLengthMin&&a->getBladeLength()<=bladeLengthMax)
+                      ){
+                        modello->res_push((*it));
+                      }
+                }
+            }
+            else if (tipo==4) {
+                if((*it)->getTipo()=="Esplosivo"){
+                    Esplosivo* a=static_cast<Esplosivo*>((*it));
+                    if(
+                            (a->getFillingWeight()<=fillingWeight||fillingWeight==0)
+                      ){
+                        modello->res_push((*it));
+                      }
+                }
+            }
+        }
+    }
+
+    if(modello->res_isEmpty()){
+        QMessageBox::information(this,"Ricerca","Non ci sono elementi che soddisfano i paramentri di ricerca.");
+    }
+    else{
+        (*risRic).setWindowTitle("Risultato della ricerca-Qontainer Armi");
+        (*risRic).setModal(true);
+        (*risRic).show();
+        (*risRic).setIt(modello->res_begin(),modello->res_end());
+    }
 
 }
 
-void Widget::slotElimina(){//Eliminazione avanzata
+void Widget::funDelete(Dettagli * det){
+    QMessageBox::StandardButton reply;
+         reply = QMessageBox::question(d, "Eliminazione oggetto.", "Sicuro di voler eliminare questo oggetto?",
+                                       QMessageBox::Yes|QMessageBox::No);
+         if (reply == QMessageBox::Yes){
+           List<Arma*>::iterator it=current;
+           if(first==last){
+              anyDataFound(true);
+           }
+           else if(current==first){
+               nextClicked();
+           }
+           else if(current==last){
+               prevClicked();
+           }
+           else prevClicked();
+           modello->erase(it);
+           det->close();
+           if(!noData){
+               last=modello->last();
+               first=modello->begin();
+               if(current==last) next->setEnabled(false);
+               if(current==first) prev->setEnabled(false);
+           }
+           modello->save();
 
+         }
 }
 
 void Widget::slotDelete(){//elimina di "Dettagli"
+    funDelete(d);
+}
+void Widget::funSave(Dettagli * det){
     QMessageBox::StandardButton reply;
-      reply = QMessageBox::question(d, "Eliminazione oggetto.", "Sicuro di voler eliminare questo oggetto?",
+      reply = QMessageBox::question(det, "Salvataggio modifiche.", "Sicuro di voler salvare le modifiche?",
                                     QMessageBox::Yes|QMessageBox::No);
       if (reply == QMessageBox::Yes){
-        List<Arma*>::iterator it=current;
-        if(first==last){
-           anyDataFound(true);
-        }
-        else if(current==first){
-            nextClicked();
-        }
-        else if(current==last){
-            prevClicked();
-        }
-        else prevClicked();
-        modello->erase(it);
-        d->close();
-        if(!noData){
-            last=modello->last();
-            first=modello->begin();
-            if(current==last) next->setEnabled(false);
-            if(current==first) prev->setEnabled(false);
-        }
+        det->layoutModificaVisible(false);
+        if(det->getImg()!="") (*current)->setImg(det->getImg());
+        if(det->getPrice()>0) (*current)->setPrice(det->getPrice());
+        img->setPixmap(imgUti->getImage((*current)->getImg()));
+        det->update_values((*current)->getImg(),(*current)->getInfo());
         modello->save();
-
       }
-
 }
-
 void Widget::slotSalva(){
-    QMessageBox::StandardButton reply;
-      reply = QMessageBox::question(d, "Salvataggio modifiche.", "Sicuro di voler salvare le modifiche?",
-                                    QMessageBox::Yes|QMessageBox::No);
-      if (reply == QMessageBox::Yes){
-        d->layoutModificaVisible(false);
-        if(d->getImg()!="") (*current)->setImg(d->getImg());
-        if(d->getPrice()>0) (*current)->setPrice(d->getPrice());
-        d->update_values((*current)->getImg(),(*current)->getInfo());
-        modello->save();
-      }
+    funSave(d);
 }
 
+void Widget::slotDeleteFromSrc(){
+       /* List<Arma*>::iterator realCurrent=++current;
+        current=risRic->getCurrent();
+        funDelete(risRic->getDettagliRicerca());
+        current=realCurrent;*/
+        //risRic->setIt(modello->res_begin(),modello->res_end());
+    modello->erase(risRic->getCurrent());
+}
+void Widget::slotSalvaFromSrc(){
+    if(current!=risRic->getCurrent()){
+        List<Arma*>::iterator realCurrent=current;
+        current=risRic->getCurrent();
+        funSave(risRic->getDettagliRicerca());
+        current=realCurrent;
+        img->setPixmap(imgUti->getImage((*current)->getImg()));
+    }
+    else slotSalva();
+    risRic->updateOnSave();
+}
+void Widget::slotEliminaTutto(){
+
+}
+
+Widget::~Widget()=default;

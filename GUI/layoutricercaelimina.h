@@ -21,7 +21,7 @@ public:
     QString getDesigner()const;
     double getPriceMin()const;
     double getPriceMax()const;
-    bool getLicenseNeeded()const;
+    int getLicenseNeeded()const;
     QString getCaliber()const;
     double getJoule()const;
     double getBladeLengthMin()const;
@@ -42,7 +42,7 @@ private:
     QLineEdit *designer;
     QDoubleSpinBox *pricetMin;
     QDoubleSpinBox *priceMax;
-    QCheckBox *licenseNeeded;
+    QComboBox *licenseNeeded;
 
     //ARMA DA FUOCO
     QLabel *lCaliber;

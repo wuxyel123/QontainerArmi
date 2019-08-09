@@ -42,8 +42,9 @@ public:
     void load();
 
     //Metodi per srcRes
-    List<Arma*>::constiterator res_cbegin() const;
-    List<Arma*>::constiterator res_cend() const;
+    void res_push(Arma*);
+    List<Arma*>::iterator res_begin() const;
+    List<Arma*>::iterator res_end() const;
     unsigned int res_getSize()const;
     bool res_isEmpty() const;
     void res_clear();

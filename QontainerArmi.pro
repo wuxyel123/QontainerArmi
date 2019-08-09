@@ -38,10 +38,10 @@ SOURCES += \
         GUI/dettagli.cpp \
         GUI/ricerca.cpp \
     GUI/layoutricercaelimina.cpp \
-    GUI/elimina.cpp \
     GUI/imageutility.cpp \
     modello.cpp \
-    nofilefoundexception.cpp
+    nofilefoundexception.cpp \
+    GUI/showrisultatiricerca.cpp
 
 HEADERS += \
         GUI/widget.h \
@@ -57,10 +57,10 @@ HEADERS += \
         GUI/dettagli.h \
         GUI/ricerca.h \
     GUI/layoutricercaelimina.h \
-    GUI/elimina.h \
     GUI/imageutility.h \
     modello.h \
-    nofilefoundexception.h
+    nofilefoundexception.h \
+    GUI/showrisultatiricerca.h
 RESOURCES += \
     resources.qrc
 DISTFILES += \

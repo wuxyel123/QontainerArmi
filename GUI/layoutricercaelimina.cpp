@@ -4,14 +4,14 @@ layoutRicercaElimina::layoutRicercaElimina(QWidget *parent) : QWidget(parent),
     tipoArma(new comboBoxTipoArma(this)),
     lName(new QLabel("Nome:",this)),
     lDesigner(new QLabel("Designer:",this)),
-    lPriceMin(new QLabel("Prezzo: Da",this)),
+    lPriceMin(new QLabel("Prezzo di mercato: Da",this)),
     lPriceMax(new QLabel("A:",this)),
     lLicense(new QLabel("Porto d'armi necessario:",this)),
     name(new QLineEdit(this)),
     designer(new QLineEdit(this)),
     pricetMin(new QDoubleSpinBox(this)),
     priceMax(new QDoubleSpinBox(this)),
-    licenseNeeded(new QCheckBox(this)),
+    licenseNeeded(new QComboBox(this)),
     lCaliber(new QLabel("Calibro:",this)),
     caliber(new QLineEdit(this)),
     lJoule(new QLabel("Joule:",this)),
@@ -41,6 +41,9 @@ layoutRicercaElimina::layoutRicercaElimina(QWidget *parent) : QWidget(parent),
     fields->addWidget(priceMax,4,1);
 
     fields->addWidget(lLicense,5,0);
+    licenseNeeded->addItem("Indifferente");
+    licenseNeeded->addItem("Si");
+    licenseNeeded->addItem("No");
     fields->addWidget(licenseNeeded,5,1);
 
     setAllExtraNotVisible();
@@ -141,7 +144,7 @@ void layoutRicercaElimina::slotViewElements(int index)const{
         setAllExtraNotVisible();
         fields->update();
         break;
-        case 1:
+        case 1://ARMA PNEUMATICA
         setArmaDaFuocoVisible(true);
         setArmaPneumaticaVisible(true);
         setArmaBiancaVisible(false);
@@ -203,7 +206,7 @@ void layoutRicercaElimina::slotReset()const{
     designer->setText("");
     pricetMin->setValue(0);
     priceMax->setValue(999999);
-    licenseNeeded->setChecked(false);
+    licenseNeeded->setCurrentIndex(0);
     caliber->setText("");
     joule->setValue(0);
     bladeLengthMin->setValue(0);
@@ -234,8 +237,8 @@ double layoutRicercaElimina::getPriceMin()const{
 double layoutRicercaElimina::getPriceMax()const{
     return priceMax->value();
 }
-bool layoutRicercaElimina::getLicenseNeeded()const{
-    return licenseNeeded->isChecked();
+int layoutRicercaElimina::getLicenseNeeded()const{
+    return licenseNeeded->currentIndex();
 }
 QString layoutRicercaElimina::getCaliber()const{
     return caliber->text();

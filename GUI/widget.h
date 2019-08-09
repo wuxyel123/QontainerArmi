@@ -8,7 +8,7 @@
 #include <QLabel>
 #include "inserimento.h"
 #include "ricerca.h"
-#include "elimina.h"
+#include "showrisultatiricerca.h"
 #include "dettagli.h"
 #include "GERARCHIA/arma.h"
 #include "GERARCHIA/armaapolvere.h"
@@ -40,36 +40,36 @@ private:
     QPushButton *visualizza;
     QPushButton *next;
     QPushButton *prev;
-    QPushButton *advancedDelete;
     QPushButton *loadNewFile;
     QLabel *img;
     Ricerca *r;
-    Elimina *e;
+    showRisultatiRicerca *risRic;
     Inserimento *i;    
     Dettagli *d;
     imageUtility* imgUti;
     Arma* toInsert;
     List<Arma*>::iterator first,last,current;
     bool noData;
+    void funDelete(Dettagli*);
+    void funSave(Dettagli*);
 
 signals:
 
-public slots:
+private slots:
     void srcClicked();
     void insertClicked();
     void visualizzaClicked();
     void nextClicked();
     void prevClicked();
-    void advancedDeleteClicked();
     void slotLoad();
     //SLOT PER SIGNALS ESTERNI
     void slotInserimento();
     void slotCerca();
-    void slotElimina();//Eliminazione avanzata
-    void slotDelete();//elimina di "Dettagli"
+    void slotDelete();
     void slotSalva();
-
-
+    void slotDeleteFromSrc();
+    void slotSalvaFromSrc();
+    void slotEliminaTutto();
 };
 
 #endif // WIDGET_H
