@@ -67,7 +67,6 @@ Widget::Widget(Modello* m,QWidget *parent) :
     connect(d->getSalva(),SIGNAL(clicked()),this,SLOT(slotSalva()));
     connect(d->getElimina(),SIGNAL(clicked()),this,SLOT(slotDelete()));
     connect(risRic->getSalva(),SIGNAL(clicked()),this,SLOT(slotSalvaFromSrc()));
-    connect(risRic->getElimina(),SIGNAL(clicked()),this,SLOT(slotDeleteFromSrc()));
     connect(risRic->getEliminaTutto(),SIGNAL(clicked()),this,SLOT(slotEliminaTutto()));
 
     if(modello->getPath()==nullptr) pathSaveLoad();
@@ -381,9 +380,6 @@ void Widget::slotSalva(){
       }
 }
 
-void Widget::slotDeleteFromSrc(){
-
-}
 void Widget::risRicSave(){
     QMessageBox::StandardButton reply;
       reply = QMessageBox::question(risRic, "Salvataggio modifiche.", "Sicuro di voler salvare le modifiche?",
@@ -409,6 +405,18 @@ void Widget::slotSalvaFromSrc(){
     img->setPixmap(imgUti->getImage((*current)->getImg()));
 }
 void Widget::slotEliminaTutto(){
+    risRic->close();
+    anyDataFound(true);
+    List<Arma*>::iterator todelete=modello->res_begin();
+    for(auto it = modello->begin(); it != modello->ptend()&&todelete!=modello->res_ptend();){
+        if((*todelete)->getInfo()==(*it)->getInfo()){//Confrontando le stringhe ottenute dal getInfo evito di fare dynamic cast
+            todelete++;
+            modello->erase(it++);
+        }
+    }
+    modello->save();
+    anyDataFound(false);
+    QMessageBox::information(this,"Eliminazione completata","Tutti gli elementi che soddisfavano i criteri di ricerca sono stati eliminati, ecco la nuova lista.");
 
 }
 

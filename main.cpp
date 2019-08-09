@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     w.show();
 
     return a.exec();
-    /*List<Arma*> l;
+   /* List<Arma*> l,l2;
     Arma* a1=new Esplosivo(1,1,1,"1","1","1");
     Arma* a2=new ArmaBianca(2,2,2,"2","2","2");
     Arma* a3=new ArmaAPolvere(3,3,3,"3","3","3");
@@ -39,16 +39,13 @@ int main(int argc, char *argv[])
     l.pushBack(a8);
     l.pushBack(a9);
     l.pushBack(a10);
-    auto it=l.begin();
-    l.erase(it);
-     it=l.begin();
-    l.erase(it);
-    it=l.begin();
-   l.erase(it);
-   std::cout<<(*it)->getInfo();
-    std::cout<<a1->getTipo()<<std::endl;
-    std::cout<<a2->getTipo()<<std::endl;
-    std::cout<<a3->getTipo()<<std::endl;
-    std::cout<<a4->getTipo()<<std::endl;*/
+
+    l2.pushBack(a5);
+    l2.pushBack(a7);
+
+   // l2.erase(l2.begin());
+    //l2.erase(l2.begin());
+    l2.erase(a5,l2.begin(),l2.end());*/
+
 
 }

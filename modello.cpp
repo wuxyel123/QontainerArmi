@@ -231,6 +231,9 @@ List<Arma*>::iterator Modello::res_begin() const{
 List<Arma*>::iterator Modello::res_end() const{
     return srcRes->end();
 }
+List<Arma*>::iterator Modello::res_ptend() const{
+    return srcRes->ptend();
+}
 unsigned int Modello::res_getSize()const{
     return srcRes->_size();
 }
@@ -240,6 +243,7 @@ bool Modello::res_isEmpty() const{
 void Modello::res_clear(){
     srcRes->_clear();
 }
+
 
 
 

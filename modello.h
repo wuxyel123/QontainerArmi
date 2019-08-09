@@ -45,9 +45,11 @@ public:
     void res_push(Arma*);
     List<Arma*>::iterator res_begin() const;
     List<Arma*>::iterator res_end() const;
+    List<Arma*>::iterator res_ptend() const;
     unsigned int res_getSize()const;
     bool res_isEmpty() const;
     void res_clear();
+    void res_erase();
 
 };
 

@@ -2,7 +2,6 @@
 
 showRisultatiRicerca::showRisultatiRicerca(QWidget* parent) : QDialog(parent),
     modifica(new QPushButton("Modifica",this)),
-    elimina(new QPushButton("Elimina",this)),
     next(new QPushButton("Successivo>>",this)),
     prev(new QPushButton("<<Precedente",this)),
     eliminaTutto(new QPushButton("Elimina tutto",this)),
@@ -24,7 +23,6 @@ showRisultatiRicerca::showRisultatiRicerca(QWidget* parent) : QDialog(parent),
     //SIZE POLICY
     prev->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
     modifica->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
-    elimina->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
     next->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
     eliminaTutto->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
     salva->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
@@ -32,18 +30,17 @@ showRisultatiRicerca::showRisultatiRicerca(QWidget* parent) : QDialog(parent),
     prev->setMaximumHeight(30);
     modifica->setMaximumHeight(30);
     salva->setMaximumHeight(30);
-    elimina->setMaximumHeight(30);
     eliminaTutto->setMaximumHeight(30);
     next->setMaximumHeight(30);
     img->setMinimumSize(300,300);
     img->setMaximumSize(400,400);
     img->setScaledContents(true);
+    price->setMaximum(999999);
     //AGGIUNTA A LAYOUT
     buttons->addWidget(prev);
     buttons->addWidget(modifica);
     buttons->addWidget(salva);
-    elimina->setIcon(QIcon(":/Immagini/deleteIcon.png"));
-    buttons->addWidget(elimina);
+    eliminaTutto->setIcon(QIcon(":/Immagini/deleteIcon.png"));
     buttons->addWidget(eliminaTutto);
     buttons->addWidget(next);
     arma->addWidget(det);
@@ -70,7 +67,6 @@ showRisultatiRicerca::showRisultatiRicerca(QWidget* parent) : QDialog(parent),
     connect(modifica,SIGNAL(clicked()),this,SLOT(modificaClicked()));
     connect(next,SIGNAL(clicked()),this,SLOT(nextClicked()));
     connect(prev,SIGNAL(clicked()),this,SLOT(prevClicked()));
-    connect(elimina,SIGNAL(clicked()),this,SLOT(updateOnDelete()));
     connect(btnImg,SIGNAL(clicked()),this,SLOT(slotChooseImage()));
 
 }
@@ -100,9 +96,6 @@ QPushButton* showRisultatiRicerca::getEliminaTutto(){
 QPushButton* showRisultatiRicerca::getSalva(){
     return salva;
 }
-QPushButton* showRisultatiRicerca::getElimina(){
-    return elimina;
-}
 List<Arma*>::iterator showRisultatiRicerca::getCurrent(){
     return current;
 }
@@ -114,6 +107,7 @@ void showRisultatiRicerca::updateOnSave(){
     else{
         img->setText("Nessun immagine trovata.");
     }
+    det->setText(QString::fromStdString((*current)->getInfo()));
     layoutModificaVisible(false);
 }
 
@@ -135,6 +129,8 @@ void showRisultatiRicerca::layoutModificaVisible(bool b){
     }
     else{//Toglie il layout di modifica
         form->removeItem(lModifica);
+        price->setValue(0);
+
     }
     lPrice->setVisible(b);
     price->setVisible(b);
@@ -172,20 +168,6 @@ void showRisultatiRicerca::prevClicked(){
         img->setText("Nessun immagine trovata.");
     }
     layoutModificaVisible(false);
-}
-
-void showRisultatiRicerca::updateOnDelete(){
-    if(first==last){
-        QMessageBox::information(this,"Ricerca","Tutti gli oggetti che soddisfavano i parametri della ricerca sono stati eliminati. ");
-       this->close();
-    }
-    else if(current==first){
-        nextClicked();
-    }
-    else if(current==last){
-        prevClicked();
-    }
-    else prevClicked();
 }
 
 void showRisultatiRicerca::slotChooseImage(){

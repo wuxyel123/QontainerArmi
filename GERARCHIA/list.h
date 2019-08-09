@@ -232,9 +232,9 @@ template<class T>
 void List<T>::erase(const T& val,iterator ifirst,iterator ilast){//elimina tutte le occorenze con info==val
    while (ifirst!=ilast) {
         if (*ifirst==val){
-            erase(ifirst);
+            erase(ifirst++);
         }
-    ++ifirst;
+
     }
     if (*ifirst==val){
         erase(ifirst);

@@ -66,7 +66,6 @@ private slots:
     void slotCerca();
     void slotDelete();
     void slotSalva();
-    void slotDeleteFromSrc();
     void slotSalvaFromSrc();
     void slotEliminaTutto();
 };

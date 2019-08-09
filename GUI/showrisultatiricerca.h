@@ -34,7 +34,6 @@ public:
     void layoutModificaVisible(bool b);
 private:
     QPushButton *modifica;
-    QPushButton *elimina;
     QPushButton *next;
     QPushButton *prev;
     QPushButton *eliminaTutto;
@@ -55,7 +54,6 @@ private slots:
     void modificaClicked();
     void nextClicked();
     void prevClicked();
-    void updateOnDelete();
     void slotChooseImage();
 
 
