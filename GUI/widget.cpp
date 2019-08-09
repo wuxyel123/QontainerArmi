@@ -66,8 +66,8 @@ Widget::Widget(Modello* m,QWidget *parent) :
     connect(r->getCerca(),SIGNAL(clicked()),this,SLOT(slotCerca()));
     connect(d->getSalva(),SIGNAL(clicked()),this,SLOT(slotSalva()));
     connect(d->getElimina(),SIGNAL(clicked()),this,SLOT(slotDelete()));
-    connect(risRic->getDettagliRicerca()->getElimina(),SIGNAL(clicked()),this,SLOT(slotDeleteFromSrc()));
-    connect(risRic->getDettagliRicerca()->getSalva(),SIGNAL(clicked()),this,SLOT(slotSalvaFromSrc()));
+    connect(risRic->getSalva(),SIGNAL(clicked()),this,SLOT(slotSalvaFromSrc()));
+    connect(risRic->getElimina(),SIGNAL(clicked()),this,SLOT(slotDeleteFromSrc()));
     connect(risRic->getEliminaTutto(),SIGNAL(clicked()),this,SLOT(slotEliminaTutto()));
 
     if(modello->getPath()==nullptr) pathSaveLoad();
@@ -129,7 +129,7 @@ void Widget::anyDataFound(bool b){
                 img->setPixmap(imgUti->getImage((*first)->getImg()));
             }
             else{
-                img->setText("Nessun immagine trovata per l'arma: "+QString::fromStdString((*first)->getName()));
+                img->setText(QString::fromStdString((*current)->getInfo()));
             }
         }
 
@@ -171,7 +171,7 @@ void Widget::nextClicked(){
         img->setPixmap(imgUti->getImage((*current)->getImg()));
     }
     else{
-        img->setText("Nessun immagine trovata per l'arma: "+QString::fromStdString((*current)->getName()));
+        img->setText(QString::fromStdString((*current)->getInfo()));
     }
 
 }
@@ -183,7 +183,7 @@ void Widget::prevClicked(){
         img->setPixmap(imgUti->getImage((*current)->getImg()));
     }
     else{
-        img->setText("Nessun immagine trovata per l'arma: "+QString::fromStdString((*current)->getName()));
+        img->setText(QString::fromStdString((*current)->getInfo()));
     }
 }
 
@@ -341,7 +341,7 @@ void Widget::slotCerca(){
 
 }
 
-void Widget::funDelete(Dettagli * det){
+void Widget::slotDelete(){//elimina di "Dettagli"
     QMessageBox::StandardButton reply;
          reply = QMessageBox::question(d, "Eliminazione oggetto.", "Sicuro di voler eliminare questo oggetto?",
                                        QMessageBox::Yes|QMessageBox::No);
@@ -353,12 +353,9 @@ void Widget::funDelete(Dettagli * det){
            else if(current==first){
                nextClicked();
            }
-           else if(current==last){
-               prevClicked();
-           }
            else prevClicked();
            modello->erase(it);
-           det->close();
+           d->close();
            if(!noData){
                last=modello->last();
                first=modello->begin();
@@ -370,44 +367,46 @@ void Widget::funDelete(Dettagli * det){
          }
 }
 
-void Widget::slotDelete(){//elimina di "Dettagli"
-    funDelete(d);
-}
-void Widget::funSave(Dettagli * det){
+void Widget::slotSalva(){
     QMessageBox::StandardButton reply;
-      reply = QMessageBox::question(det, "Salvataggio modifiche.", "Sicuro di voler salvare le modifiche?",
+      reply = QMessageBox::question(d, "Salvataggio modifiche.", "Sicuro di voler salvare le modifiche?",
                                     QMessageBox::Yes|QMessageBox::No);
       if (reply == QMessageBox::Yes){
-        det->layoutModificaVisible(false);
-        if(det->getImg()!="") (*current)->setImg(det->getImg());
-        if(det->getPrice()>0) (*current)->setPrice(det->getPrice());
+        d->layoutModificaVisible(false);
+        if(d->getImg()!="") (*current)->setImg(d->getImg());
+        if(d->getPrice()>0) (*current)->setPrice(d->getPrice());
         img->setPixmap(imgUti->getImage((*current)->getImg()));
-        det->update_values((*current)->getImg(),(*current)->getInfo());
+        d->update_values((*current)->getImg(),(*current)->getInfo());
         modello->save();
       }
 }
-void Widget::slotSalva(){
-    funSave(d);
-}
 
 void Widget::slotDeleteFromSrc(){
-       /* List<Arma*>::iterator realCurrent=++current;
-        current=risRic->getCurrent();
-        funDelete(risRic->getDettagliRicerca());
-        current=realCurrent;*/
-        //risRic->setIt(modello->res_begin(),modello->res_end());
-    modello->erase(risRic->getCurrent());
+
+}
+void Widget::risRicSave(){
+    QMessageBox::StandardButton reply;
+      reply = QMessageBox::question(risRic, "Salvataggio modifiche.", "Sicuro di voler salvare le modifiche?",
+                                    QMessageBox::Yes|QMessageBox::No);
+      if (reply == QMessageBox::Yes){
+        risRic->layoutModificaVisible(false);
+        if(risRic->getImg()!="") (*current)->setImg(risRic->getImg());
+        if(risRic->getPrice()>0) (*current)->setPrice(risRic->getPrice());
+        modello->save();
+      }
 }
 void Widget::slotSalvaFromSrc(){
-    if(current!=risRic->getCurrent()){
+   if(current!=risRic->getCurrent()){
         List<Arma*>::iterator realCurrent=current;
         current=risRic->getCurrent();
-        funSave(risRic->getDettagliRicerca());
+        risRicSave();
         current=realCurrent;
-        img->setPixmap(imgUti->getImage((*current)->getImg()));
     }
-    else slotSalva();
+   else{
+       risRicSave();
+   }
     risRic->updateOnSave();
+    img->setPixmap(imgUti->getImage((*current)->getImg()));
 }
 void Widget::slotEliminaTutto(){
 

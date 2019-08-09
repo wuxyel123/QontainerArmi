@@ -85,7 +85,7 @@ void Dettagli::update_values(std::string im,std::string inf)const{
 
 }
 
-void Dettagli::slotModifica()const{
+void Dettagli::slotModifica(){
     layoutModificaVisible(true);
 }
 
@@ -104,11 +104,12 @@ double Dettagli::getPrice()const{
     return price->value();
 }
 
-void Dettagli::layoutModificaVisible(bool b)const{
+void Dettagli::layoutModificaVisible(bool b){
     if(b){//Visualizza il layout di modifica
         form->removeItem(buttons);
         form->addItem(lModifica);
         form->addItem(buttons);
+        imageRawData="";
     }
     else{//Toglie il layout di modifica
         form->removeItem(lModifica);

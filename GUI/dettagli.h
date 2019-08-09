@@ -26,7 +26,7 @@ public:
     QPushButton *getElimina();
     std::string getImg()const;
     double getPrice()const;
-    void layoutModificaVisible(bool)const;
+    void layoutModificaVisible(bool);
     void update_values(std::string,std::string)const;
 
 private:
@@ -49,7 +49,7 @@ private:
 signals:
 
 private slots:
-    void slotModifica()const;
+    void slotModifica();
     void slotChooseImage();
 };
 

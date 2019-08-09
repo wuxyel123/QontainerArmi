@@ -31,6 +31,7 @@ public:
     ~Widget();
     void pathSaveLoad();
     void anyDataFound(bool);
+    void risRicSave();
 
 private:
     Ui::Widget *ui;
@@ -50,8 +51,6 @@ private:
     Arma* toInsert;
     List<Arma*>::iterator first,last,current;
     bool noData;
-    void funDelete(Dettagli*);
-    void funSave(Dettagli*);
 
 signals:
 
