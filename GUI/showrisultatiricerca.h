@@ -24,14 +24,14 @@ class showRisultatiRicerca : public QDialog
 public:
     explicit showRisultatiRicerca(QWidget *parent = nullptr);
     void setIt(List<Arma*>::iterator,List<Arma*>::iterator);
-    QPushButton* getEliminaTutto();
-    QPushButton* getSalva();
-    QPushButton* getElimina();
-    List<Arma*>::iterator getCurrent();
+    QPushButton* getEliminaTutto()const;
+    QPushButton* getSalva()const;
+    QPushButton* getElimina()const;
+    List<Arma*>::iterator getCurrent()const;
     void updateOnSave();
     std::string getImg()const;
     double getPrice()const;
-    void layoutModificaVisible(bool b);
+    void layoutModificaVisible(bool b);//modifica image raw data
 private:
     QPushButton *modifica;
     QPushButton *next;

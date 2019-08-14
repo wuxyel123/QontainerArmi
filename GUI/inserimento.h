@@ -29,9 +29,9 @@ class Inserimento : public QDialog
     Q_OBJECT
 public:
     explicit Inserimento(QWidget *parent = nullptr);
-    comboBoxTipoArma* getCBTipoArma();
-    QPushButton* getInserisci();
-    Arma* getWeaponToInsert();
+    comboBoxTipoArma* getCBTipoArma()const;
+    QPushButton* getInserisci()const;
+    Arma* getWeaponToInsert();//Modifica imageRawData
 
 private:
     void setAllExtraNotVisible() const;

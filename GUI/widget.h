@@ -31,7 +31,7 @@ public:
     ~Widget();
     void pathSaveLoad();
     void anyDataFound(bool);
-    void risRicSave();
+    void risRicSave()const;
 
 private:
     Ui::Widget *ui;
@@ -55,9 +55,9 @@ private:
 signals:
 
 private slots:
-    void srcClicked();
-    void insertClicked();
-    void visualizzaClicked();
+    void srcClicked()const;
+    void insertClicked()const;
+    void visualizzaClicked()const;
     void nextClicked();
     void prevClicked();
     void slotLoad();
@@ -65,7 +65,7 @@ private slots:
     void slotInserimento();
     void slotCerca();
     void slotDelete();
-    void slotSalva();
+    void slotSalva()const;
     void slotSalvaFromSrc();
     void slotEliminaTutto();
 };

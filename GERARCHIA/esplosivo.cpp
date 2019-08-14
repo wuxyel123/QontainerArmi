@@ -19,10 +19,10 @@ double Esplosivo::getFillingWeight() const{
 }
 std::string Esplosivo::getInfo() const{
     return Arma::getInfo()+
-    "Carica: "+filling+"\n"+
-    "Peso carica: "+std::to_string(fillingWeight)+" g \n"+
-    "Spoletta: "+detonationMechanism+"\n"+
-    "Prezzo "+ std::to_string(getPrice())+" euro \n";
+    "-Carica: "+filling+"\n\n"+
+    "-Peso carica: "+std::to_string(fillingWeight)+" g \n\n"+
+    "-Spoletta: "+detonationMechanism+"\n\n"+
+    "-Prezzo "+ std::to_string(getPrice())+" euro \n";
 }
 std::ostream& operator<<(std::ostream& os,const Esplosivo& a){
     return os<<a.getInfo();

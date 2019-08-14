@@ -137,7 +137,7 @@ void Widget::anyDataFound(bool b){
 
 }
 
-void Widget::srcClicked(){
+void Widget::srcClicked()const{
     (*r).setWindowTitle("Ricerca-Qontainer Armi");
     (*r).setModal(true);
     (*r).show();
@@ -150,13 +150,13 @@ void Widget::srcClicked(){
                                          "-Se non compili nulla vedrai la lista di tutte le armi presenti");
 
 }
-void Widget::insertClicked(){
+void Widget::insertClicked()const{
     (*i).setWindowTitle("Inserimento-Qontainer Armi");
     (*i).setModal(true);
     (*i).show();
 
 }
-void Widget::visualizzaClicked(){
+void Widget::visualizzaClicked()const{
     (*d).setModal(true);
     (*d).update_values((*current)->getImg(),(*current)->getInfo());
     (*d).show();
@@ -366,7 +366,7 @@ void Widget::slotDelete(){//elimina di "Dettagli"
          }
 }
 
-void Widget::slotSalva(){
+void Widget::slotSalva()const{
     QMessageBox::StandardButton reply;
       reply = QMessageBox::question(d, "Salvataggio modifiche.", "Sicuro di voler salvare le modifiche?",
                                     QMessageBox::Yes|QMessageBox::No);
@@ -380,14 +380,14 @@ void Widget::slotSalva(){
       }
 }
 
-void Widget::risRicSave(){
+void Widget::risRicSave()const{
     QMessageBox::StandardButton reply;
       reply = QMessageBox::question(risRic, "Salvataggio modifiche.", "Sicuro di voler salvare le modifiche?",
                                     QMessageBox::Yes|QMessageBox::No);
-      if (reply == QMessageBox::Yes){
-        risRic->layoutModificaVisible(false);
+      if (reply == QMessageBox::Yes){       
         if(risRic->getImg()!="") (*current)->setImg(risRic->getImg());
         if(risRic->getPrice()>0) (*current)->setPrice(risRic->getPrice());
+        risRic->layoutModificaVisible(false);
         modello->save();
       }
 }
@@ -405,19 +405,25 @@ void Widget::slotSalvaFromSrc(){
     img->setPixmap(imgUti->getImage((*current)->getImg()));
 }
 void Widget::slotEliminaTutto(){
-    risRic->close();
-    anyDataFound(true);
-    List<Arma*>::iterator todelete=modello->res_begin();
-    for(auto it = modello->begin(); it != modello->ptend()&&todelete!=modello->res_ptend();){
-        if((*todelete)->getInfo()==(*it)->getInfo()){//Confrontando le stringhe ottenute dal getInfo evito di fare dynamic cast
-            todelete++;
-            modello->erase(it++);
+    QMessageBox::StandardButton reply;
+         reply = QMessageBox::question(d, "Eliminazione elementi.", "Sicuro di voler eliminare tutti gli elementi?",
+                                       QMessageBox::Yes|QMessageBox::No);
+         if (reply == QMessageBox::Yes){
+                risRic->close();
+                anyDataFound(true);
+                List<Arma*>::iterator todelete=modello->res_begin();
+                List<Arma*>::iterator tmp;
+                for(auto it = modello->begin(); it != modello->ptend()&&todelete!=modello->res_ptend();){
+                    tmp=it++;
+                    if((*todelete)->getInfo()==(*tmp)->getInfo()){//Confrontando le stringhe ottenute dal getInfo evito di fare dynamic cast
+                        todelete++;
+                        modello->erase(tmp);
+                    }
+                }
+                modello->save();
+                anyDataFound(false);
+                QMessageBox::information(this,"Eliminazione completata","Tutti gli elementi che soddisfavano i criteri di ricerca sono stati eliminati, ecco la nuova lista.");
         }
-    }
-    modello->save();
-    anyDataFound(false);
-    QMessageBox::information(this,"Eliminazione completata","Tutti gli elementi che soddisfavano i criteri di ricerca sono stati eliminati, ecco la nuova lista.");
-
 }
 
 Widget::~Widget()=default;

@@ -22,12 +22,12 @@ class Dettagli : public QDialog
     Q_OBJECT
 public:
     explicit Dettagli(QWidget *parent = nullptr);
-    QPushButton *getSalva();
-    QPushButton *getElimina();
+    QPushButton *getSalva()const;
+    QPushButton *getElimina()const;
     std::string getImg()const;
     double getPrice()const;
     void layoutModificaVisible(bool);
-    void update_values(std::string,std::string)const;
+    void update_values(std::string,std::string);
 
 private:
     QTextEdit* info;

@@ -40,7 +40,7 @@ Inserimento::Inserimento(QWidget *parent) : QDialog(parent),
     lCartridge(new QLabel("Munizioni:",this)),
     cartridge(new QTextEdit(this)),
 
-    lBladeLength(new QLabel("Lungheezza lama (cm):",this)),
+    lBladeLength(new QLabel("Lunghezza lama (cm):",this)),
     lHiltType(new QLabel("Tipo impugnatura:",this)),
     lBladeType(new QLabel("Tipo lama:",this)),
     bladeLength(new QDoubleSpinBox(this)),
@@ -417,11 +417,11 @@ void Inserimento::slotChooseImage(){
 
 }
 
-comboBoxTipoArma* Inserimento::getCBTipoArma(){
+comboBoxTipoArma* Inserimento::getCBTipoArma()const{
     return tipoArma;
 }
 
-QPushButton* Inserimento::getInserisci(){
+QPushButton* Inserimento::getInserisci()const{
     return inserisci;
 }
 
@@ -507,6 +507,7 @@ Arma* Inserimento::getWeaponToInsert(){
                         );
         break;
     }
+    imageRawData="";
     return armaDaInserire;
 }
 

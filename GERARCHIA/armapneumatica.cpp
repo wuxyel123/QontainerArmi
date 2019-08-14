@@ -23,9 +23,9 @@ double ArmaPneumatica::getPrice() const {
 }
 std::string ArmaPneumatica::getInfo() const{
     return  ArmaDaFuoco::getInfo()+
-            "Potenza: "+std::to_string(joule)+" joule \n"+
-            "Principio di funzionamento: "+gasUsed+"\n"
-            "Prezzo "+ std::to_string(getPrice())+" euro \n";
+            "-Potenza: "+std::to_string(joule)+" joule \n\n"+
+            "-Principio di funzionamento: "+gasUsed+"\n\n"
+            "-Prezzo "+ std::to_string(getPrice())+" euro \n\n";
 }
 std::ostream& operator<<(std::ostream& os,const ArmaPneumatica& a){
     return os<<a.getInfo();

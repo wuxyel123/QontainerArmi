@@ -21,10 +21,10 @@ Ricerca::Ricerca(QWidget *parent) : QDialog(parent),
     connect(reset,SIGNAL(clicked()),ric,SLOT(slotReset()));
 }
 
-layoutRicercaElimina* Ricerca::getLCampi(){
+layoutRicercaElimina* Ricerca::getLCampi()const{
     return ric;
 }
 
-QPushButton* Ricerca::getCerca(){
+QPushButton* Ricerca::getCerca()const{
     return cerca;
 }

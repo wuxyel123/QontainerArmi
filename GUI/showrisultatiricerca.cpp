@@ -90,13 +90,13 @@ void showRisultatiRicerca::setIt(List<Arma*>::iterator f,List<Arma*>::iterator l
 
 }
 
-QPushButton* showRisultatiRicerca::getEliminaTutto(){
+QPushButton* showRisultatiRicerca::getEliminaTutto()const{
     return eliminaTutto;
 }
-QPushButton* showRisultatiRicerca::getSalva(){
+QPushButton* showRisultatiRicerca::getSalva()const{
     return salva;
 }
-List<Arma*>::iterator showRisultatiRicerca::getCurrent(){
+List<Arma*>::iterator showRisultatiRicerca::getCurrent()const{
     return current;
 }
 
@@ -117,7 +117,8 @@ std::string showRisultatiRicerca::getImg()const{
 }
 
 double showRisultatiRicerca::getPrice()const{
-    return price->value();
+    double ret=price->value();
+    return ret;
 }
 
 void showRisultatiRicerca::layoutModificaVisible(bool b){
@@ -155,6 +156,7 @@ void showRisultatiRicerca::nextClicked(){
     else{
         img->setText("Nessun immagine trovata.");
     }
+    det->setText(QString::fromStdString((*current)->getInfo()));
     layoutModificaVisible(false);
 }
 void showRisultatiRicerca::prevClicked(){
@@ -167,6 +169,7 @@ void showRisultatiRicerca::prevClicked(){
     else{
         img->setText("Nessun immagine trovata.");
     }
+    det->setText(QString::fromStdString((*current)->getInfo()));
     layoutModificaVisible(false);
 }
 

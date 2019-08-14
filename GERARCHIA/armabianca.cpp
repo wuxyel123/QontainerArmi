@@ -23,10 +23,10 @@ double ArmaBianca::getPrice() const{
 }
 std::string ArmaBianca::getInfo() const{//virtual 
     return  Arma::getInfo()+
-            "Lunghezza lama: "+std::to_string(bladeLength)+" cm \n"+
-            "Tipo impugnatura: "+hiltType+"\n"+
-            "Tipo lama: "+bladeType+"\n"+
-            "Prezzo "+ std::to_string(getPrice())+" euro \n";
+            "-Lunghezza lama: "+std::to_string(bladeLength)+" cm \n\n"+
+            "-Tipo impugnatura: "+hiltType+"\n\n"+
+            "-Tipo lama: "+bladeType+"\n\n"+
+            "-Prezzo "+ std::to_string(getPrice())+" euro \n\n";
 }
 std::ostream& operator<<(std::ostream& os,const ArmaBianca& a){
     return os<<a.getInfo();

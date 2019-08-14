@@ -13,8 +13,8 @@ std::string ArmaAPolvere::getCartridge() const{
 }
 std::string ArmaAPolvere::getInfo() const{
     return  ArmaDaFuoco::getInfo()+
-            "Munizioni: "+cartridge+"\n"+
-            "Prezzo "+ std::to_string(getPrice())+" euro \n";
+            "-Munizioni: "+cartridge+"\n\n"+
+            "-Prezzo "+ std::to_string(getPrice())+" euro \n\n";
 }
 std::ostream& operator<<(std::ostream& os,const ArmaAPolvere& a){
     return os<<a.getInfo();

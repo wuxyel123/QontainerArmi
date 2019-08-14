@@ -65,7 +65,7 @@ void Modello::save()const{
            writer.writeEmptyElement(tipo);
 
            //ARMA
-           writer.writeAttribute("lenght",QString::fromStdString(toSave->getName()));
+           writer.writeAttribute("lenght",QString::fromStdString(std::to_string(toSave->getLength())));
            writer.writeAttribute("weight",QString::fromStdString(std::to_string(toSave->getWeight())));
            writer.writeAttribute("price",QString::fromStdString(std::to_string(toSave->Arma::getPrice())));
            writer.writeAttribute("designer",QString::fromStdString(toSave->getDesigner()));

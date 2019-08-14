@@ -73,7 +73,8 @@ Dettagli::Dettagli(QWidget *parent) : QDialog(parent),
 
 }
 
-void Dettagli::update_values(std::string im,std::string inf)const{
+void Dettagli::update_values(std::string im,std::string inf){
+    imageRawData="";
     //Load dati
     if(im!=""){
         img->setPixmap(imgUti->getImage(im));
@@ -89,10 +90,10 @@ void Dettagli::slotModifica(){
     layoutModificaVisible(true);
 }
 
-QPushButton* Dettagli::getSalva(){
+QPushButton* Dettagli::getSalva()const{
     return salva;
 }
-QPushButton* Dettagli::getElimina(){
+QPushButton* Dettagli::getElimina()const{
     return elimina;
 }
 

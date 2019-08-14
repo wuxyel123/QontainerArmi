@@ -39,12 +39,12 @@ return (Arma::getLength()>60||barrelLength>30.0)?Arma::getPrice()*1.35:Arma::get
 }
 std::string ArmaDaFuoco::getInfo() const{//virtual 
     return  Arma::getInfo()+
-            "Rateo di fuoco: "+std::to_string(rateOfFire)+" RPM \n"+
-            "Tiro utile: "+std::to_string(firingRange)+" m \n"+
-            "Velocità alla volata: "+std::to_string(muzzleVelocity)+"m/s \n"+
-            "Lunghezza canna: "+std::to_string(barrelLength)+" cm \n"+
-            "Calibro: "+caliber+"\n"+
-            "Alimentazione: "+feedSystem+"\n";
+            "-Rateo di fuoco: "+std::to_string(rateOfFire)+" RPM \n\n"+
+            "-Tiro utile: "+std::to_string(firingRange)+" m \n\n"+
+            "-Velocità alla volata: "+std::to_string(muzzleVelocity)+"m/s \n\n"+
+            "-Lunghezza canna: "+std::to_string(barrelLength)+" cm \n\n"+
+            "-Calibro: "+caliber+"\n\n"+
+            "-Alimentazione: "+feedSystem+"\n\n";
 }
 std::ostream& operator<<(std::ostream& os,const ArmaDaFuoco& a){
     return os<<a.getInfo();

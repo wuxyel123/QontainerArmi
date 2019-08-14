@@ -21,8 +21,8 @@ private:
 
 public:
     explicit Ricerca(QWidget *parent = nullptr);
-    layoutRicercaElimina* getLCampi();
-    QPushButton* getCerca();
+    layoutRicercaElimina* getLCampi()const;
+    QPushButton* getCerca()const;
 
 signals:
 
