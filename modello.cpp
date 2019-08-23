@@ -65,9 +65,9 @@ void Modello::save()const{
            writer.writeEmptyElement(tipo);
 
            //ARMA
-           writer.writeAttribute("lenght",QString::fromStdString(std::to_string(toSave->getLength())));
-           writer.writeAttribute("weight",QString::fromStdString(std::to_string(toSave->getWeight())));
-           writer.writeAttribute("price",QString::fromStdString(std::to_string(toSave->Arma::getPrice())));
+           writer.writeAttribute("lenght",QString::number(toSave->getLength()));
+           writer.writeAttribute("weight",QString::number(toSave->getWeight()));
+           writer.writeAttribute("price",QString::number(toSave->Arma::getPrice()));
            writer.writeAttribute("designer",QString::fromStdString(toSave->getDesigner()));
            writer.writeAttribute("materials",QString::fromStdString(toSave->getMaterials()));
            writer.writeAttribute("name",QString::fromStdString(toSave->getName()));
@@ -76,22 +76,22 @@ void Modello::save()const{
            //ARMA PNEUMATICA
            if(tipo=="ArmaPneumatica"){
                const ArmaPneumatica* p= static_cast<const ArmaPneumatica*>(toSave);
-               writer.writeAttribute("rateOfFire",QString::fromStdString(std::to_string( p->getRateOfFire())));
-               writer.writeAttribute("firingRange",QString::fromStdString(std::to_string( p->getFiringRange())));
-               writer.writeAttribute("muzzleVelocity",QString::fromStdString(std::to_string( p->getMuzzleVelocity())));
-               writer.writeAttribute("barrelLength",QString::fromStdString(std::to_string( p->getBarrelLength())));
+               writer.writeAttribute("rateOfFire",QString::number( p->getRateOfFire()));
+               writer.writeAttribute("firingRange",QString::number( p->getFiringRange()));
+               writer.writeAttribute("muzzleVelocity",QString::number( p->getMuzzleVelocity()));
+               writer.writeAttribute("barrelLength",QString::number( p->getBarrelLength()));
                writer.writeAttribute("caliber",QString::fromStdString(p->getCaliber()));
                writer.writeAttribute("feedSystem",QString::fromStdString(p->getFeedSystem()));
 
-               writer.writeAttribute("joule",QString::fromStdString(std::to_string( p->getJoule())));
+               writer.writeAttribute("joule",QString::number( p->getJoule()));
                writer.writeAttribute("gasUsed",QString::fromStdString(p->getGasUsed()));
 
            }else if(tipo=="ArmaAPolvere"){//ARMA A POLVERE
                const ArmaAPolvere* p= static_cast<const ArmaAPolvere*>(toSave);
-               writer.writeAttribute("rateOfFire",QString::fromStdString(std::to_string( p->getRateOfFire())));
-               writer.writeAttribute("firingRange",QString::fromStdString(std::to_string( p->getFiringRange())));
-               writer.writeAttribute("muzzleVelocity",QString::fromStdString(std::to_string( p->getMuzzleVelocity())));
-               writer.writeAttribute("barrelLength",QString::fromStdString(std::to_string( p->getBarrelLength())));
+               writer.writeAttribute("rateOfFire",QString::number( p->getRateOfFire()));
+               writer.writeAttribute("firingRange",QString::number( p->getFiringRange()));
+               writer.writeAttribute("muzzleVelocity",QString::number( p->getMuzzleVelocity()));
+               writer.writeAttribute("barrelLength",QString::number( p->getBarrelLength()));
                writer.writeAttribute("caliber",QString::fromStdString(p->getCaliber()));
                writer.writeAttribute("feedSystem",QString::fromStdString(p->getFeedSystem()));
 
@@ -99,7 +99,7 @@ void Modello::save()const{
 
            }else if(tipo=="ArmaBianca"){//ARMA BIANCA
                const ArmaBianca* p= static_cast<const ArmaBianca*>(toSave);
-               writer.writeAttribute("bladeLength",QString::fromStdString(std::to_string( p->getBladeLength())));
+               writer.writeAttribute("bladeLength",QString::number( p->getBladeLength()));
                writer.writeAttribute("bladeType",QString::fromStdString(p->getBladeType()));
                writer.writeAttribute("hiltType",QString::fromStdString(p->getHiltType()));
 
@@ -107,7 +107,7 @@ void Modello::save()const{
                const Esplosivo* p= static_cast<const Esplosivo*>(toSave);
                writer.writeAttribute("filling",QString::fromStdString(p->getFilling()));
                writer.writeAttribute("detonationMechanism",QString::fromStdString(p->getDetonationMechanism()));
-               writer.writeAttribute("fillingWeight",QString::fromStdString(std::to_string( p->getFillingWeight())));
+               writer.writeAttribute("fillingWeight",QString::number( p->getFillingWeight()));
            }
            if (writer.hasError()){
                throw std::exception();
